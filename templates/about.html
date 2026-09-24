@@ -1,0 +1,109 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}About — Ujval Thakor | Backend Developer{% endblock %}
+{% block meta_description %}Learn about Ujval Thakor, a backend developer and Computer Engineering student specializing in Python, Django, REST APIs, and AI integrations.{% endblock %}
+
+{% block content %}
+<section class="case-study-hero" style="padding-top: 8.5rem; padding-bottom: 3.5rem;">
+  <div class="container">
+    <div class="section-label reveal-init">ENGINEERING PROFILE</div>
+    <h1 class="section-title reveal-init delay-1">ABOUT <span class="accent">UJVAL</span>.</h1>
+    <p class="section-subtitle reveal-init delay-2">
+      B.Tech Computer Engineering student and backend developer turning complex business requirements into resilient, testable software architecture.
+    </p>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+    <div class="about-grid">
+      <div class="reveal-init">
+        <span class="section-label">ENGINEERING PHILOSOPHY</span>
+        <h2 class="about-editorial-title">{{ profile.about_editorial_heading }}</h2>
+      </div>
+
+      <div class="about-editorial-content reveal-init delay-1">
+        <p class="about-editorial-lead">
+          {{ profile.about_editorial_text }}
+        </p>
+
+        <p style="color: var(--text-muted); font-size: 1.05rem; line-height: 1.7;">
+          Modern web interfaces are only as dependable as the services backing them. When designing a backend, I prioritize relational integrity, query latency budgets, idempotent API endpoints, and clean decoupling between data models and client serializers.
+        </p>
+
+        <div style="background-color: var(--surface-card); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 2rem; margin-top: 1rem;">
+          <h3 style="font-family: var(--font-mono); font-size: 0.85rem; color: var(--accent); letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 1rem;">
+            // CORE ENGINEERING PRINCIPLES
+          </h3>
+          <ul class="timeline-bullets">
+            <li style="color: var(--text);"><strong>Relational Rigor:</strong> Normalizing schemas and indexing query vectors before throwing caching at unoptimized queries.</li>
+            <li style="color: var(--text);"><strong>Explicit Over Implicit:</strong> Writing predictable, readable Python service objects rather than buried magical hooks.</li>
+            <li style="color: var(--text);"><strong>Defensive Boundary Validation:</strong> Sanitizing, validating, and ratelimiting all client inputs at the DRF serializer layer.</li>
+            <li style="color: var(--text);"><strong>Pragmatic AI Integration:</strong> Keeping heavy computer vision and ML inference asynchronous so user-facing HTTP threads never block.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+    <div class="section-header reveal-init">
+      <span class="section-label">ACADEMIC & PRACTICAL TIMELINE</span>
+      <h2 class="section-title">PRACTICAL <span class="accent">TRACK RECORD</span>.</h2>
+    </div>
+
+    <div class="experience-timeline">
+      {% for exp in experiences %}
+      <div class="timeline-item reveal-init">
+        <div>
+          <span class="timeline-period">{{ exp.start_date }} — {{ exp.end_date }}</span>
+          <span class="timeline-type-badge {% if exp.experience_type == 'INTERNSHIP' %}internship{% elif exp.experience_type == 'PROFESSIONAL_PROJECT' %}professional{% else %}personal{% endif %}">
+            {{ exp.get_experience_type_display }}
+          </span>
+        </div>
+
+        <div class="timeline-content">
+          <h3 class="timeline-role">{{ exp.role }}</h3>
+          <span class="timeline-company">{{ exp.company }} · {{ exp.location }}</span>
+          <p class="timeline-desc">{{ exp.description }}</p>
+
+          {% if exp.get_highlights_list %}
+          <ul class="timeline-bullets">
+            {% for bullet in exp.get_highlights_list %}
+            <li>{{ bullet }}</li>
+            {% endfor %}
+          </ul>
+          {% endif %}
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<section class="section section--no-border">
+  <div class="container">
+    <div class="resume-cta-box reveal-init">
+      <span class="section-label">NEXT STEPS</span>
+      <h2 class="resume-cta-title">EXPLORE THE <span style="color: var(--accent);">FULL CV</span>.</h2>
+      <p class="resume-cta-desc">
+        Download my structured resume or inspect the interactive case studies.
+      </p>
+
+      <div class="resume-cta-actions">
+        <a href="{% url 'core:resume_view' %}" class="btn btn-primary magnetic-btn">
+          <span>VIEW WEB RESUME</span>
+          <span>↗</span>
+        </a>
+        <a href="{% url 'contact:contact_submit' %}" class="btn btn-secondary magnetic-btn">
+          <span>CONTACT UJVAL</span>
+          <span>→</span>
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}

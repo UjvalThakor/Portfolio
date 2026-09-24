@@ -1,0 +1,56 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Contact & Inquiries — Ujval Thakor | Backend Developer{% endblock %}
+{% block meta_description %}Get in touch with Ujval Thakor for backend engineering, Python, Django, REST API development, and AI integration projects.{% endblock %}
+
+{% block content %}
+<section class="case-study-hero" style="padding-top: 8.5rem; padding-bottom: 3.5rem;">
+  <div class="container">
+    <div class="section-label reveal-init">INITIATE DIALOGUE</div>
+    <h1 class="section-title reveal-init delay-1">GET IN <span class="accent">TOUCH</span>.</h1>
+    <p class="section-subtitle reveal-init delay-2">
+      Interested in discussing an engineering role, technical consultation, or backend architecture? Send a message directly into my database.
+    </p>
+  </div>
+</section>
+
+<section class="section section--no-border">
+  <div class="container">
+    <div class="contact-grid">
+      <div class="contact-info reveal-init">
+        <div>
+          <span class="section-label">COMMUNICATION CHANNELS</span>
+          <h2 class="contact-heading" style="font-size: 2.5rem; margin-top: 0.5rem;">DIRECT ACCESS</h2>
+          <p class="contact-subtext">
+            Based in Surat, Gujarat, India. Responsive to emails and technical engineering inquiries within 24 hours.
+          </p>
+        </div>
+
+        <div class="contact-direct-links">
+          <a href="mailto:{{ profile.email }}" class="direct-link-item">
+            <span>EMAIL</span>
+            <span>{{ profile.email }} ↗</span>
+          </a>
+          <a href="{{ profile.github_url }}" target="_blank" rel="noopener" class="direct-link-item">
+            <span>GITHUB</span>
+            <span>github.com/ujvalthakor ↗</span>
+          </a>
+          <a href="{{ profile.linkedin_url }}" target="_blank" rel="noopener" class="direct-link-item">
+            <span>LINKEDIN</span>
+            <span>linkedin.com/in/ujvalthakor ↗</span>
+          </a>
+          <div class="direct-link-item" style="border-bottom: none;">
+            <span>AVAILABILITY</span>
+            <span style="color: var(--accent);">Open to Opportunities</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="reveal-init delay-1">
+        {% include 'components/contact_form.html' %}
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}

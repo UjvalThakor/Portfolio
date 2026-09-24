@@ -1,0 +1,454 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<!-- Horizontal Progress Line at bottom of viewport -->
+<div class="h-progress-line" aria-hidden="true">
+  <div class="h-progress-fill" id="h-progress-bar"></div>
+</div>
+
+<!-- Floating Horizontal Navigation Pill -->
+<div class="h-nav-indicator" title="Horizontal page navigation">
+  <button type="button" class="h-nav-arrow" id="h-nav-prev" title="Previous page (reverse scroll / left)" aria-label="Previous page">←</button>
+  <span id="h-indicator-label">01 / HERO</span>
+  <button type="button" class="h-nav-arrow" id="h-nav-next" title="Next page (forward scroll / right)" aria-label="Next page">→</button>
+</div>
+
+<!-- ==========================================================================
+     HORIZONTAL CONTINUOUS TRACK
+     ========================================================================== -->
+<div class="horizontal-canvas" id="horizontal-canvas">
+
+  <!-- ========================================================================
+       PANEL 1: HERO CANVAS (Exact Screen from Douglus Screenshot)
+       ======================================================================== -->
+  <section class="h-panel h-panel-hero" id="hero" data-title="01 / HERO">
+    
+    <!-- Left Fixed Floating Black Badge: W. Honors -->
+    <aside class="left-fixed-badge" aria-label="Accreditations">
+      <span class="badge-logo">W.</span>
+      <span class="badge-text-vertical">Honors</span>
+    </aside>
+
+    <!-- Top Navigation Bar -->
+    <header class="douglus-nav">
+      <div class="nav-brand">
+        <a href="#hero">Ujval</a>
+      </div>
+
+      <nav class="nav-center-menu" aria-label="Primary Navigation">
+        <a href="#work" class="nav-center-link">Works,</a>
+        <a href="#architecture" class="nav-center-link">About,</a>
+        <a href="#contact" class="nav-center-link">Contact</a>
+      </nav>
+
+      <div class="nav-right-socials">
+        <a href="{{ profile.github_url }}" target="_blank" rel="noopener" class="nav-social-link">Github</a>
+        <a href="{{ profile.linkedin_url }}" target="_blank" rel="noopener" class="nav-social-link">LinkedIn</a>
+        <a href="mailto:{{ profile.email }}" class="nav-social-link">Email</a>
+      </div>
+    </header>
+
+    <!-- Main Hero Canvas Layout -->
+    <div class="hero-canvas">
+      
+      <!-- Top Row: 01/ Metadata on Left | CREATIVE DEVELOPER on Right -->
+      <div class="hero-top-row">
+        <div class="hero-meta-block">
+          <span class="meta-index">01/</span>
+          <span class="meta-tagline">From Surat with<br>Code</span>
+        </div>
+
+        <h1 class="hero-giant-title-right">
+          CREATIVE<br>DEVELOPER
+        </h1>
+      </div>
+
+      <!-- Middle Row: Interactive Draggable Panorama Frame -->
+      <div class="hero-mid-row">
+        <div class="panorama-container">
+          <span class="panorama-drag-label">DRAG ME</span>
+          <div class="panorama-frame">
+            <img src="{% static 'images/hero_banner.jpg' %}" alt="Creative Software Studio" class="panorama-img">
+            <div class="drag-circle-handle">DRAG ME</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Bottom Row: UJVAL THAKOR on Left | Location Statement on Right -->
+      <div class="hero-bottom-row">
+        <div class="hero-giant-title-left">
+          UJVAL<br>THAKOR
+        </div>
+
+        <div class="hero-location-statement">
+          <span class="statement-arrow">→</span>
+          <div class="statement-text">
+            I BASED IN<br>
+            SURAT, GUJARAT,<br>
+            PASSIONATE IN BACKEND & ARCHITECTURE
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Bottom Bar: © 2026 Portfolio | Scroll Indicator | Design & Code by Ujval -->
+    <footer class="douglus-footer-bar">
+      <div>© {{ current_year }} Portfolio</div>
+      <div style="display: flex; align-items: center; gap: 1.5rem;">
+        <span style="font-family: var(--font-mono); font-size: 0.72rem; color: #777;">SCROLL MOUSE WHEEL HORIZONTALLY →</span>
+        <span>Design & code by Ujval</span>
+      </div>
+    </footer>
+
+  </section>
+
+
+  <!-- ========================================================================
+       PANEL 2: SELECTED WORK (Horizontal Projects Track)
+       ======================================================================== -->
+  <section class="h-panel h-panel-work" id="work" data-title="02 / WORKS">
+    <div style="margin-bottom: 1.5rem;">
+      <span class="section-label">SELECTED WORK</span>
+      <h2 class="section-title">ENGINEERED <span style="color: var(--accent);">SYSTEMS</span>.</h2>
+      <p class="section-subtitle">
+        A curated archive of 6 backend systems, APIs, management platforms, and computer vision pipelines.
+      </p>
+    </div>
+
+    <!-- Horizontal Project Cards Track -->
+    <div class="h-projects-track">
+      {% for project in featured_projects %}
+      <article class="h-project-card">
+        <div>
+          <div class="project-card-header">
+            <span class="project-num">{{ project.project_number }}/</span>
+            <span class="project-category-badge">{{ project.category }}</span>
+          </div>
+
+          <h3 class="project-title" style="font-size: 1.85rem; margin-top: 0.5rem;">
+            <a href="{% url 'projects:detail' slug=project.slug %}">{{ project.title }}</a>
+          </h3>
+
+          <p class="project-summary" style="font-size: 0.95rem; margin-bottom: 1.25rem;">
+            {{ project.short_description }}
+          </p>
+
+          <div class="project-tech-tags">
+            {% for tech in project.technologies.all %}
+            <span class="tech-tag">{{ tech.name }}</span>
+            {% endfor %}
+          </div>
+        </div>
+
+        <div style="margin-top: 1.5rem; border-top: 1px solid var(--border); padding-top: 1.25rem;">
+          <div class="project-links">
+            <a href="{% url 'projects:detail' slug=project.slug %}" class="project-link-item" style="color: #000; font-weight: 800;">
+              <span>CASE STUDY</span>
+              <span>→</span>
+            </a>
+            {% if project.github_url %}
+            <a href="{{ project.github_url }}" target="_blank" rel="noopener" class="project-link-item">
+              <span>GITHUB</span>
+              <span>↗</span>
+            </a>
+            {% endif %}
+            {% if project.live_url %}
+            <a href="{{ project.live_url }}" target="_blank" rel="noopener" class="project-link-item">
+              <span>LIVE</span>
+              <span>↗</span>
+            </a>
+            {% endif %}
+          </div>
+        </div>
+      </article>
+      {% endfor %}
+    </div>
+  </section>
+
+
+  <!-- ========================================================================
+       PANEL 3: SIGNATURE ARCHITECTURE (Behind the Request)
+       ======================================================================== -->
+  <section class="h-panel h-panel-architecture" id="architecture" data-title="03 / ARCHITECTURE">
+    <div style="margin-bottom: 1.5rem;">
+      <span class="section-label">SIGNATURE ARCHITECTURE</span>
+      <h2 class="section-title">BEHIND THE <span style="color: var(--accent);">REQUEST</span>.</h2>
+      <p class="section-subtitle">
+        Interactive inspection of how an incoming HTTP request flows through Django to PostgreSQL and back as JSON.
+      </p>
+    </div>
+
+    <div class="request-lifecycle-wrapper" style="background-color: #0c0c10; color: #fefff8; border-radius: var(--radius-sm); padding: 2rem;">
+      <div class="lifecycle-header" style="border-bottom-color: rgba(255, 255, 255, 0.1); margin-bottom: 1.5rem; padding-bottom: 1rem;">
+        <div class="lifecycle-badge">
+          <span class="lifecycle-method">GET</span>
+          <span class="lifecycle-path">/api/v1/projects/</span>
+        </div>
+
+        <button class="btn btn-secondary btn-sm magnetic-btn" id="lifecycle-run-sim" style="color: #fff; border-color: rgba(255, 255, 255, 0.3);">
+          RUN SIMULATION
+        </button>
+      </div>
+
+      <!-- Pipeline Steps -->
+      <div class="lifecycle-pipeline" style="margin-bottom: 2rem;">
+        <div class="pipeline-node is-active" data-step="1">
+          <span class="node-step-num">01</span>
+          <span class="node-title">Client</span>
+          <span class="node-indicator"></span>
+        </div>
+        <div class="pipeline-node" data-step="2">
+          <span class="node-step-num">02</span>
+          <span class="node-title">Router</span>
+          <span class="node-indicator"></span>
+        </div>
+        <div class="pipeline-node" data-step="3">
+          <span class="node-step-num">03</span>
+          <span class="node-title">DRF View</span>
+          <span class="node-indicator"></span>
+        </div>
+        <div class="pipeline-node" data-step="4">
+          <span class="node-step-num">04</span>
+          <span class="node-title">Serializer</span>
+          <span class="node-indicator"></span>
+        </div>
+        <div class="pipeline-node" data-step="5">
+          <span class="node-step-num">05</span>
+          <span class="node-title">QuerySet</span>
+          <span class="node-indicator"></span>
+        </div>
+        <div class="pipeline-node" data-step="6">
+          <span class="node-step-num">06</span>
+          <span class="node-title">Database</span>
+          <span class="node-indicator"></span>
+        </div>
+        <div class="pipeline-node" data-step="7">
+          <span class="node-step-num">07</span>
+          <span class="node-title">200 OK</span>
+          <span class="node-indicator"></span>
+        </div>
+      </div>
+
+      <!-- Detail Deck -->
+      <div class="lifecycle-detail-deck" style="padding: 1.5rem;">
+        <div class="lifecycle-info-col">
+          <h4 class="lifecycle-node-heading" id="lifecycle-node-title" style="color: #fff; font-size: 1.25rem;">
+            01. HTTP Client Request
+          </h4>
+          <p class="lifecycle-node-desc" id="lifecycle-node-desc" style="color: #aaa; font-size: 0.9rem;">
+            The browser dispatches an asynchronous HTTP request with JSON accept headers and authorization tokens.
+          </p>
+
+          <div class="lifecycle-metrics" style="border-top-color: rgba(255, 255, 255, 0.1); margin-top: 0.75rem; padding-top: 0.75rem;">
+            <div class="lifecycle-metric-item">
+              <span class="metric-label">Latency</span>
+              <span class="metric-val" id="lifecycle-metric-latency">0.2ms</span>
+            </div>
+            <div class="lifecycle-metric-item">
+              <span class="metric-label">Target</span>
+              <span class="metric-val" id="lifecycle-metric-purpose">Network Ingress & TLS</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="lifecycle-code-col" style="padding: 1rem;">
+          <div class="code-col-header" style="border-bottom-color: rgba(255, 255, 255, 0.1); margin-bottom: 0.5rem;">
+            <span>PYTHON / DJANGO SPECIFICATION</span>
+            <span style="color: var(--accent-mint);">READ-ONLY</span>
+          </div>
+          <pre class="code-snippet" id="lifecycle-code" style="font-size: 0.78rem;">GET /api/v1/projects/ HTTP/1.1
+Host: ujval.dev
+Accept: application/json</pre>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ========================================================================
+       PANEL 4: THE STACK BEHIND THE SYSTEM
+       ======================================================================== -->
+  <section class="h-panel h-panel-stack" id="stack" data-title="04 / STACK">
+    <div style="margin-bottom: 1.5rem;">
+      <span class="section-label">ENGINEERING ECOSYSTEM</span>
+      <h2 class="section-title">THE STACK BEHIND <br><span style="color: var(--accent);">THE SYSTEM</span>.</h2>
+      <p class="section-subtitle">
+        Categorized by purpose in high-reliability software architectures.
+      </p>
+    </div>
+
+    <div class="stack-grid" style="grid-template-columns: repeat(3, 1fr); gap: 1.25rem;">
+      {% for group in grouped_technologies %}
+      <div class="stack-category-card" style="padding: 1.5rem;">
+        <div class="stack-card-header">
+          <span class="stack-category-title">// {{ group.label }}</span>
+        </div>
+
+        <div class="stack-items-list">
+          {% for tech in group.technologies|slice:":3" %}
+          <div class="stack-tech-item">
+            <div class="stack-tech-name">
+              <span>{{ tech.name }}</span>
+              <span style="font-weight: 300;">→</span>
+            </div>
+            {% if tech.description %}
+            <span class="stack-tech-desc">{{ tech.description }}</span>
+            {% endif %}
+          </div>
+          {% endfor %}
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </section>
+
+
+  <!-- ========================================================================
+       PANEL 5: ABOUT & HOW I BUILD
+       ======================================================================== -->
+  <section class="h-panel h-panel-process" id="about" data-title="05 / ABOUT">
+    <div style="margin-bottom: 1.5rem;">
+      <span class="section-label">ENGINEERING PHILOSOPHY</span>
+      <h2 class="section-title">HOW I <span style="color: var(--accent);">BUILD</span>.</h2>
+      <p class="section-subtitle">
+        "I build the system behind the experience." A disciplined 6-stage engineering lifecycle.
+      </p>
+    </div>
+
+    <div class="process-grid" style="grid-template-columns: repeat(3, 1fr); gap: 1.25rem;">
+      <div class="process-card" style="padding: 1.5rem;">
+        <span class="process-card-num">01</span>
+        <h3 class="process-card-title">UNDERSTAND</h3>
+        <p class="process-card-desc">Understand domain logic, concurrency targets, and data relationships.</p>
+      </div>
+
+      <div class="process-card" style="padding: 1.5rem;">
+        <span class="process-card-num">02</span>
+        <h3 class="process-card-title">DESIGN</h3>
+        <p class="process-card-desc">Design normalized schemas, index strategies, and clean RESTful API contracts.</p>
+      </div>
+
+      <div class="process-card" style="padding: 1.5rem;">
+        <span class="process-card-num">03</span>
+        <h3 class="process-card-title">BUILD</h3>
+        <p class="process-card-desc">Implement robust Django views, DRF serializers, and external AI integrations.</p>
+      </div>
+
+      <div class="process-card" style="padding: 1.5rem;">
+        <span class="process-card-num">04</span>
+        <h3 class="process-card-title">TEST</h3>
+        <p class="process-card-desc">Verify payload validations, boundary conditions, and profile SQL queries.</p>
+      </div>
+
+      <div class="process-card" style="padding: 1.5rem;">
+        <span class="process-card-num">05</span>
+        <h3 class="process-card-title">DEPLOY</h3>
+        <p class="process-card-desc">Containerize services with Docker, configure Gunicorn, and set up Nginx proxy.</p>
+      </div>
+
+      <div class="process-card" style="padding: 1.5rem;">
+        <span class="process-card-num">06</span>
+        <h3 class="process-card-title">IMPROVE</h3>
+        <p class="process-card-desc">Profile performance under load, implement Redis caching, and monitor logs.</p>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ========================================================================
+       PANEL 6: INTERACTIVE TERMINAL & EXPERIENCE
+       ======================================================================== -->
+  <section class="h-panel h-panel-terminal" id="terminal" data-title="06 / CLI">
+    <div style="margin-bottom: 1.5rem;">
+      <span class="section-label">DEVELOPER CLI</span>
+      <h2 class="section-title">TERMINAL <span style="color: var(--accent);">INTERFACE</span>.</h2>
+      <p class="section-subtitle">
+        Click a quick command or type directly into the interactive prompt.
+      </p>
+    </div>
+
+    <div class="interactive-terminal" style="background-color: #0c0c10; color: #fff; border-radius: var(--radius-sm);">
+      <div class="terminal-header" style="background-color: #14141a; border-bottom: 1px solid rgba(255, 255, 255, 0.1); padding: 0.6rem 1rem;">
+        <span class="terminal-tag" style="color: var(--accent-mint);">ujval@production-server:~ (bash 5.2)</span>
+        <span style="font-size: 0.72rem; color: #888;">TYPE 'help' FOR COMMANDS</span>
+      </div>
+
+      <div class="terminal-quick-chips" style="background-color: #0e0e14; border-bottom: 1px solid rgba(255, 255, 255, 0.1); padding: 0.5rem 1rem;">
+        <button class="term-chip" data-cmd="about">about</button>
+        <button class="term-chip" data-cmd="projects">projects</button>
+        <button class="term-chip" data-cmd="stack">stack</button>
+        <button class="term-chip" data-cmd="status">status</button>
+        <button class="term-chip" data-cmd="neofetch">neofetch</button>
+        <button class="term-chip" data-cmd="clear">clear</button>
+      </div>
+
+      <div class="terminal-screen" id="dev-terminal-screen" style="max-height: 280px; padding: 1.25rem;">
+        <div class="terminal-history" id="dev-terminal-history">
+          <div class="term-entry">
+            <pre class="cmd-output" style="color: var(--accent-mint); font-size: 0.75rem;">
+ _   _ _ __   ___  _  __    ____           
+| | | | '_ \ / _ \| |/ /   |  _ \  _____   __
+| | | | |_) | (_) | ' /    | | | |/ _ \ \ / /
+ \___/| .__/ \___/|_|\_\   | |_| |  __/\ V / 
+      |_|                  |____/ \___| \_/  
+Backend Developer • Surat, India • Python 3.12 • Django 6.1
+Type "help" or click any command above.
+            </pre>
+          </div>
+        </div>
+
+        <div class="term-input-line">
+          <span class="term-prompt" style="color: var(--accent-mint);">ujval@dev:~$</span>
+          <input type="text" id="dev-terminal-input" class="term-input-field" placeholder="type a command..." autocomplete="off" spellcheck="false" style="color: #fff;">
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ========================================================================
+       PANEL 7: CONTACT & RESUME
+       ======================================================================== -->
+  <section class="h-panel h-panel-contact" id="contact" data-title="07 / CONTACT">
+    <div class="contact-grid">
+      <div class="contact-info">
+        <div>
+          <span class="section-label">INITIATE CONTACT</span>
+          <h2 class="contact-heading" style="font-size: 2.8rem; margin-top: 0.5rem;">
+            LET'S BUILD <br>SOMETHING <br><span style="color: var(--accent);">USEFUL</span>.
+          </h2>
+          <p class="contact-subtext">
+            Open to backend engineering internships, developer roles, and technical collaborations involving Python, Django, and AI systems.
+          </p>
+        </div>
+
+        <div class="contact-direct-links">
+          <a href="mailto:{{ profile.email }}" class="direct-link-item">
+            <span>EMAIL DIRECT</span>
+            <span>{{ profile.email }} ↗</span>
+          </a>
+          <a href="{{ profile.github_url }}" target="_blank" rel="noopener" class="direct-link-item">
+            <span>GITHUB</span>
+            <span>github.com/ujvalthakor ↗</span>
+          </a>
+          <a href="{{ profile.linkedin_url }}" target="_blank" rel="noopener" class="direct-link-item">
+            <span>LINKEDIN</span>
+            <span>linkedin.com/in/ujvalthakor ↗</span>
+          </a>
+          <a href="{% url 'core:resume_view' %}" class="direct-link-item" style="border-bottom: none; color: var(--accent);">
+            <span>OFFICIAL CV / RESUME</span>
+            <span>VIEW RESUME ↗</span>
+          </a>
+        </div>
+      </div>
+
+      <div>
+        {% include 'components/contact_form.html' %}
+      </div>
+    </div>
+  </section>
+
+</div>
+{% endblock %}

@@ -1,0 +1,195 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}{{ project.title }} — Case Study | Ujval Thakor{% endblock %}
+{% block meta_description %}{{ project.short_description }}{% endblock %}
+
+{% block content %}
+<article>
+  <!-- Case Study Hero -->
+  <header class="case-study-hero">
+    <div class="container">
+      <div class="case-study-meta reveal-init">
+        <span>PROJECT {{ project.project_number }}</span>
+        <span>·</span>
+        <span>{{ project.category }}</span>
+        <span>·</span>
+        <span>{{ project.year }}</span>
+      </div>
+
+      <h1 class="case-study-title reveal-init delay-1">{{ project.title }}</h1>
+      <p class="case-study-summary reveal-init delay-2">{{ project.short_description }}</p>
+
+      <div class="case-study-actions reveal-init delay-3">
+        {% if project.github_url %}
+        <a href="{{ project.github_url }}" target="_blank" rel="noopener" class="btn btn-primary magnetic-btn">
+          <span>VIEW GITHUB REPOSITORY</span>
+          <span>↗</span>
+        </a>
+        {% endif %}
+
+        {% if project.live_url %}
+        <a href="{{ project.live_url }}" target="_blank" rel="noopener" class="btn btn-secondary magnetic-btn">
+          <span>LIVE DEPLOYMENT</span>
+          <span>↗</span>
+        </a>
+        {% endif %}
+
+        <a href="{% url 'projects:list' %}" class="btn btn-secondary magnetic-btn">
+          <span>← BACK TO ALL WORK</span>
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Case Study Main Content & Sidebar -->
+  <div class="container">
+    <div class="case-study-grid">
+      
+      <!-- Main Narrative -->
+      <div class="case-study-main">
+        
+        <!-- 1. System Overview -->
+        <section class="case-study-section reveal-init">
+          <h2 class="case-section-title">01. SYSTEM OVERVIEW</h2>
+          <div class="case-study-body">
+            <p>{{ project.description }}</p>
+          </div>
+        </section>
+
+        <!-- 2. System Architecture & Request Flow -->
+        <section class="case-study-section reveal-init">
+          <h2 class="case-section-title">02. ARCHITECTURAL DESIGN & PIPELINE</h2>
+          <div class="case-study-body">
+            <p style="margin-bottom: 1.5rem;">{{ project.architecture_description }}</p>
+            
+            {% if flow_stages %}
+            <div class="arch-flow-diagram">
+              <span style="font-family: var(--font-mono); font-size: 0.72rem; color: var(--text-subtle); letter-spacing: 0.1em; text-transform: uppercase;">
+                EXECUTION FLOW SEQUENCE
+              </span>
+              {% for stage in flow_stages %}
+              <div class="arch-flow-step">
+                <span class="arch-step-num">{{ forloop.counter|stringformat:"02d" }}</span>
+                <span>{{ stage }}</span>
+              </div>
+              {% if not forloop.last %}
+              <div class="arch-step-arrow">↓</div>
+              {% endif %}
+              {% endfor %}
+            </div>
+            {% endif %}
+          </div>
+        </section>
+
+        <!-- 3. Key Technical Features -->
+        {% if features %}
+        <section class="case-study-section reveal-init">
+          <h2 class="case-section-title">03. KEY TECHNICAL CAPABILITIES</h2>
+          <div class="case-study-body">
+            <ul class="timeline-bullets" style="display: flex; flex-direction: column; gap: 0.75rem;">
+              {% for feature in features %}
+              <li style="font-size: 1.02rem; line-height: 1.6; color: var(--text);">{{ feature }}</li>
+              {% endfor %}
+            </ul>
+          </div>
+        </section>
+        {% endif %}
+
+        <!-- 4. Real Technical Challenge & Engineered Solution -->
+        {% if project.challenge or project.solution %}
+        <section class="case-study-section reveal-init">
+          <h2 class="case-section-title">04. ENGINEERING CHALLENGE & RESOLUTION</h2>
+          <div class="case-study-body" style="display: flex; flex-direction: column; gap: 2rem;">
+            {% if project.challenge %}
+            <div style="background-color: var(--surface-card); border-left: 3px solid var(--status-warn); padding: 1.5rem; border-radius: 0 var(--radius-sm) var(--radius-sm) 0;">
+              <span style="font-family: var(--font-mono); font-size: 0.75rem; color: var(--status-warn); text-transform: uppercase; letter-spacing: 0.1em; display: block; margin-bottom: 0.5rem;">
+                IDENTIFIED BOTTLENECK / CHALLENGE
+              </span>
+              <p style="color: var(--text);">{{ project.challenge }}</p>
+            </div>
+            {% endif %}
+
+            {% if project.solution %}
+            <div style="background-color: var(--surface-card); border-left: 3px solid var(--accent); padding: 1.5rem; border-radius: 0 var(--radius-sm) var(--radius-sm) 0;">
+              <span style="font-family: var(--font-mono); font-size: 0.75rem; color: var(--accent); text-transform: uppercase; letter-spacing: 0.1em; display: block; margin-bottom: 0.5rem;">
+                ENGINEERED SOLUTION & PATTERN
+              </span>
+              <p style="color: var(--text);">{{ project.solution }}</p>
+            </div>
+            {% endif %}
+          </div>
+        </section>
+        {% endif %}
+
+        <!-- 5. What I Learned -->
+        {% if project.learning %}
+        <section class="case-study-section reveal-init">
+          <h2 class="case-section-title">05. ARCHITECTURAL TAKEAWAYS</h2>
+          <div class="case-study-body">
+            <p>{{ project.learning }}</p>
+          </div>
+        </section>
+        {% endif %}
+
+      </div>
+
+      <!-- Sidebar Metadata -->
+      <aside class="case-study-sidebar">
+        <div class="sidebar-box reveal-init">
+          <span class="sidebar-title">// TECHNOLOGIES EMPLOYED</span>
+          <div class="project-tech-tags" style="margin-bottom: 0;">
+            {% for tech in project.technologies.all %}
+            <span class="tech-tag" style="background-color: rgba(13, 242, 147, 0.05); color: var(--text); border-color: rgba(13, 242, 147, 0.2);">
+              {{ tech.name }}
+            </span>
+            {% endfor %}
+          </div>
+        </div>
+
+        <div class="sidebar-box reveal-init delay-1">
+          <span class="sidebar-title">// PROJECT METADATA</span>
+          <div style="display: flex; flex-direction: column; gap: 1rem; font-family: var(--font-mono); font-size: 0.85rem;">
+            <div>
+              <span style="color: var(--text-subtle); display: block; font-size: 0.7rem;">ROLE</span>
+              <span>Backend & System Architecture</span>
+            </div>
+            <div>
+              <span style="color: var(--text-subtle); display: block; font-size: 0.7rem;">TIMEFRAME</span>
+              <span>{{ project.year }}</span>
+            </div>
+            <div>
+              <span style="color: var(--text-subtle); display: block; font-size: 0.7rem;">STATUS</span>
+              <span style="color: var(--accent);">Production Code / Tested</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="sidebar-box reveal-init delay-2">
+          <span class="sidebar-title">// INQUIRE ABOUT THIS SYSTEM</span>
+          <p style="font-size: 0.88rem; color: var(--text-muted); line-height: 1.5;">
+            Want to discuss the implementation details, database schema, or run the codebase locally?
+          </p>
+          <a href="mailto:{{ profile.email }}?subject=Inquiry regarding {{ project.title|urlencode }}" class="btn btn-secondary btn-sm magnetic-btn" style="margin-top: 0.5rem;">
+            DISCUSS WITH UJVAL →
+          </a>
+        </div>
+      </aside>
+
+    </div>
+
+    <!-- Sequential Next / Prev Case Study Navigator -->
+    <nav class="case-navigator reveal-init" aria-label="Project Navigation">
+      <a href="{% url 'projects:detail' slug=prev_project.slug %}" class="nav-prev-next">
+        <span class="label">← PREVIOUS SYSTEM ({{ prev_project.project_number }})</span>
+        <span class="title">{{ prev_project.title }}</span>
+      </a>
+
+      <a href="{% url 'projects:detail' slug=next_project.slug %}" class="nav-prev-next" style="text-align: right;">
+        <span class="label">NEXT SYSTEM ({{ next_project.project_number }}) →</span>
+        <span class="title">{{ next_project.title }}</span>
+      </a>
+    </nav>
+  </div>
+</article>
+{% endblock %}

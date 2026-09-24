@@ -1,0 +1,60 @@
+<div class="contact-form-container" id="contact-form-wrapper">
+  {% if messages %}
+    {% for message in messages %}
+      <div class="form-feedback {% if message.tags %}{{ message.tags }}{% endif %}">
+        {{ message }}
+      </div>
+    {% endfor %}
+  {% endif %}
+
+  {% if form_has_errors %}
+    <div class="form-feedback error">
+      Please check the highlighted fields below and try again.
+    </div>
+  {% endif %}
+
+  <form method="POST" action="{% url 'contact:contact_submit' %}" 
+        hx-post="{% url 'contact:contact_submit' %}" 
+        hx-target="#contact-form-wrapper" 
+        hx-swap="outerHTML">
+    {% csrf_token %}
+    {{ contact_form.website_check }}
+
+    <div class="form-group">
+      <label for="contact-name" class="form-label">Your Name</label>
+      {{ contact_form.name }}
+      {% if contact_form.name.errors %}
+        <span class="form-error-msg">{{ contact_form.name.errors.0 }}</span>
+      {% endif %}
+    </div>
+
+    <div class="form-group">
+      <label for="contact-email" class="form-label">Email Address</label>
+      {{ contact_form.email }}
+      {% if contact_form.email.errors %}
+        <span class="form-error-msg">{{ contact_form.email.errors.0 }}</span>
+      {% endif %}
+    </div>
+
+    <div class="form-group">
+      <label for="contact-subject" class="form-label">Subject</label>
+      {{ contact_form.subject }}
+      {% if contact_form.subject.errors %}
+        <span class="form-error-msg">{{ contact_form.subject.errors.0 }}</span>
+      {% endif %}
+    </div>
+
+    <div class="form-group">
+      <label for="contact-message" class="form-label">Message</label>
+      {{ contact_form.message }}
+      {% if contact_form.message.errors %}
+        <span class="form-error-msg">{{ contact_form.message.errors.0 }}</span>
+      {% endif %}
+    </div>
+
+    <button type="submit" class="btn btn-primary magnetic-btn" style="width: 100%; margin-top: 1rem;">
+      <span>SEND MESSAGE</span>
+      <span>→</span>
+    </button>
+  </form>
+</div>

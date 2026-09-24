@@ -1,0 +1,448 @@
+/* ==========================================================================
+   BACKEND RUNTIME, TERMINAL & API LIFECYCLE STYLES
+   ========================================================================== */
+
+/* 1. HERO BACKEND RUNTIME PANEL */
+.backend-runtime-panel {
+  background-color: #0b0b0f;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6);
+  font-family: var(--font-mono);
+  margin-top: 3.5rem;
+}
+
+.terminal-topbar {
+  background-color: #121217;
+  border-bottom: 1px solid var(--border);
+  padding: 0.65rem 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.terminal-dots {
+  display: flex;
+  gap: 6px;
+}
+
+.terminal-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+.dot-red { background-color: #ff5f56; }
+.dot-yellow { background-color: #ffbd2e; }
+.dot-green { background-color: #27c93f; }
+
+.terminal-title {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  letter-spacing: 0.05em;
+}
+
+.terminal-live-badge {
+  font-size: 0.7rem;
+  color: var(--accent);
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.terminal-body {
+  padding: 1.5rem;
+  font-size: 0.88rem;
+  line-height: 1.7;
+  color: #d1d1db;
+  overflow-x: auto;
+}
+
+.cmd-line {
+  color: var(--accent);
+  margin-bottom: 0.6rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.cmd-line .prompt {
+  color: var(--text-muted);
+}
+
+.cmd-output {
+  color: #a1a1aa;
+}
+
+.status-row {
+  display: flex;
+  justify-content: space-between;
+  max-width: 480px;
+  margin-bottom: 0.25rem;
+  border-bottom: 1px dashed rgba(255, 255, 255, 0.05);
+  padding-bottom: 0.2rem;
+}
+
+.status-row .service {
+  color: var(--text);
+}
+
+.status-row .state {
+  color: var(--accent);
+  font-weight: 600;
+}
+
+.status-row .state.warn {
+  color: var(--status-warn);
+}
+
+/* Simulation Controls */
+.runtime-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-top: 1.25rem;
+  padding-top: 1.25rem;
+  border-top: 1px solid var(--border);
+}
+
+.sim-btn {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  padding: 0.4rem 0.85rem;
+  background-color: rgba(255, 255, 255, 0.04);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  color: var(--text-muted);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.sim-btn:hover {
+  background-color: var(--accent-dim);
+  border-color: var(--accent-border);
+  color: var(--accent);
+}
+
+.sim-btn.active {
+  background-color: var(--accent);
+  color: #000;
+  border-color: var(--accent);
+}
+
+/* 2. "BEHIND THE REQUEST" — INTERACTIVE API LIFECYCLE */
+.request-lifecycle-wrapper {
+  background-color: var(--surface-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: clamp(2rem, 3.5vw, 3.5rem);
+  margin-top: 2rem;
+}
+
+.lifecycle-header {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1.5rem;
+  margin-bottom: 2.5rem;
+  border-bottom: 1px solid var(--border);
+  padding-bottom: 1.5rem;
+}
+
+.lifecycle-badge {
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  background-color: rgba(13, 242, 147, 0.08);
+  border: 1px solid var(--accent-border);
+  color: var(--accent);
+  padding: 0.35rem 0.85rem;
+  border-radius: 999px;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.lifecycle-method {
+  font-weight: 700;
+  color: var(--accent);
+}
+
+.lifecycle-path {
+  color: var(--text);
+}
+
+/* Interactive Pipeline Track */
+.lifecycle-pipeline {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 0.75rem;
+  position: relative;
+  margin-bottom: 3rem;
+}
+
+.pipeline-node {
+  background-color: #0c0c10;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 1.25rem 0.85rem;
+  cursor: pointer;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  transition: all var(--transition-fast);
+  position: relative;
+}
+
+.pipeline-node:hover,
+.pipeline-node.is-active {
+  border-color: var(--accent);
+  background-color: #121219;
+  transform: translateY(-4px);
+  box-shadow: 0 8px 24px rgba(13, 242, 147, 0.12);
+}
+
+.node-step-num {
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  color: var(--text-subtle);
+}
+
+.pipeline-node.is-active .node-step-num {
+  color: var(--accent);
+}
+
+.node-title {
+  font-family: var(--font-mono);
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--text);
+  line-height: 1.3;
+}
+
+.pipeline-node.is-active .node-title {
+  color: var(--accent);
+}
+
+.node-indicator {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background-color: var(--border-strong);
+  transition: background-color var(--transition-fast);
+}
+
+.pipeline-node.is-active .node-indicator {
+  background-color: var(--accent);
+  box-shadow: 0 0 8px var(--accent);
+}
+
+/* Node Detail Explanation Deck */
+.lifecycle-detail-deck {
+  display: grid;
+  grid-template-columns: 1.2fr 1fr;
+  gap: 2rem;
+  background-color: #08080b;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: 2rem;
+}
+
+.lifecycle-info-col {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.lifecycle-node-heading {
+  font-family: var(--font-display);
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--text);
+}
+
+.lifecycle-node-desc {
+  font-size: 0.95rem;
+  color: var(--text-muted);
+  line-height: 1.6;
+}
+
+.lifecycle-metrics {
+  display: flex;
+  gap: 1.5rem;
+  margin-top: 1rem;
+  border-top: 1px dashed var(--border);
+  padding-top: 1rem;
+}
+
+.lifecycle-metric-item {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+}
+
+.metric-label {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  color: var(--text-subtle);
+  text-transform: uppercase;
+}
+
+.metric-val {
+  font-family: var(--font-mono);
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--accent);
+}
+
+/* Code Preview Column */
+.lifecycle-code-col {
+  background-color: #0e0e14;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 1.25rem;
+  overflow-x: auto;
+}
+
+.code-col-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  color: var(--text-subtle);
+  border-bottom: 1px solid var(--border);
+  padding-bottom: 0.5rem;
+  margin-bottom: 0.75rem;
+}
+
+.code-snippet {
+  font-family: var(--font-mono);
+  font-size: 0.82rem;
+  line-height: 1.6;
+  color: #e2e2ec;
+  white-space: pre;
+}
+
+.code-snippet .keyword { color: #ff7b72; }
+.code-snippet .function { color: #d2a8ff; }
+.code-snippet .string { color: #a5d6ff; }
+.code-snippet .comment { color: #8b949e; }
+.code-snippet .number { color: #79c0ff; }
+
+/* 3. INTERACTIVE TERMINAL (UJVAL@DEV:~$) */
+.interactive-terminal {
+  background-color: #08080b;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.7);
+  font-family: var(--font-mono);
+}
+
+.terminal-header {
+  background-color: #111116;
+  border-bottom: 1px solid var(--border);
+  padding: 0.75rem 1.25rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.terminal-tag {
+  font-size: 0.78rem;
+  color: var(--accent);
+  letter-spacing: 0.05em;
+}
+
+.terminal-quick-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  padding: 0.75rem 1.25rem;
+  background-color: #0c0c11;
+  border-bottom: 1px solid var(--border);
+}
+
+.term-chip {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  padding: 0.2rem 0.6rem;
+  background-color: rgba(255, 255, 255, 0.04);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  color: var(--text-muted);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.term-chip:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+  background-color: var(--accent-dim);
+}
+
+.terminal-screen {
+  padding: 1.5rem;
+  min-height: 280px;
+  max-height: 480px;
+  overflow-y: auto;
+  font-size: 0.85rem;
+  line-height: 1.65;
+  color: #cfd0dc;
+}
+
+.terminal-history {
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+  margin-bottom: 1rem;
+}
+
+.term-entry {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+}
+
+.term-input-line {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.term-prompt {
+  color: var(--accent);
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.term-input-field {
+  flex: 1;
+  color: var(--text);
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  background: transparent;
+  border: none;
+  outline: none;
+}
+
+/* Responsive adjustments for terminal and lifecycle */
+@media (max-width: 1024px) {
+  .lifecycle-pipeline {
+    grid-template-columns: repeat(4, 1fr);
+  }
+  .lifecycle-detail-deck {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 768px) {
+  .lifecycle-pipeline {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}

@@ -1,0 +1,74 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>{% block title %}Ujval Thakor — Backend Developer | Python • Django • REST APIs • AI/ML{% endblock %}</title>
+  
+  <meta name="description" content="{% block meta_description %}Personal portfolio of Ujval Thakor, a Backend Developer based in Surat, India. Specializing in Python, Django, REST APIs, PostgreSQL, Redis, Docker, and AI/Computer Vision integrations.{% endblock %}">
+  <meta name="keywords" content="Ujval Thakor, Backend Developer, Python Developer, Django Developer, REST APIs, Django REST Framework, Surat Developer, India, AI ML, OpenCV, PostgreSQL">
+  <meta name="author" content="Ujval Thakor">
+  <meta name="robots" content="index, follow">
+  
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="{{ request.build_absolute_uri }}">
+  <meta property="og:title" content="{% block og_title %}Ujval Thakor — Backend Developer{% endblock %}">
+  <meta property="og:description" content="{% block og_description %}I build reliable backend systems, APIs, automation tools, and AI-powered applications.{% endblock %}">
+  <meta property="og:site_name" content="Ujval Thakor">
+
+  <!-- Twitter / X -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="{% block twitter_title %}Ujval Thakor — Backend Developer{% endblock %}">
+  <meta name="twitter:description" content="{% block twitter_description %}I build reliable backend systems, APIs, automation tools, and AI-powered applications.{% endblock %}">
+
+  <link rel="canonical" href="{{ request.build_absolute_uri }}">
+
+  <!-- CSS Stylesheets -->
+  <link rel="stylesheet" href="{% static 'css/main.css' %}">
+  <link rel="stylesheet" href="{% static 'css/terminal.css' %}">
+  <link rel="stylesheet" href="{% static 'css/cursor.css' %}">
+  <link rel="stylesheet" href="{% static 'css/animations.css' %}">
+
+  {% block extra_head %}{% endblock %}
+</head>
+<body>
+
+  <!-- Preloader (Douglus-inspired Editorial Entrance) -->
+  <div id="preloader" class="preloader" aria-hidden="true">
+    <div class="preloader-word-wrap">
+      <div id="preloader-word" class="preloader-word">INITIALIZE</div>
+    </div>
+    <div id="preloader-sub" class="preloader-sub">
+      UJVAL THAKOR · BACKEND DEVELOPER · {{ current_year }}
+    </div>
+    <div id="preloader-progress" class="preloader-progress-bar"></div>
+  </div>
+
+  <!-- Navigation (for internal pages) -->
+  {% if request.path != '/' %}
+    {% include 'components/navbar.html' %}
+  {% endif %}
+
+  <!-- Main Content -->
+  <main id="main-content">
+    {% block content %}{% endblock %}
+  </main>
+
+  <!-- Footer -->
+  {% include 'components/footer.html' %}
+
+  <!-- HTMX for dynamic interactions without SPA bloat -->
+  <script src="https://unpkg.com/htmx.org@1.9.12" integrity="sha384-ujb1lZYWyU24++NURBWvspwG98PYPYug596TCWKE2uN/8PXRF6rMrZ4nA2LQ" crossorigin="anonymous"></script>
+
+  <!-- JavaScript Modules -->
+  <script src="{% static 'js/main.js' %}"></script>
+  <script src="{% static 'js/cursor.js' %}"></script>
+  <script src="{% static 'js/terminal.js' %}"></script>
+  <script src="{% static 'js/lifecycle.js' %}"></script>
+
+  {% block extra_scripts %}{% endblock %}
+</body>
+</html>

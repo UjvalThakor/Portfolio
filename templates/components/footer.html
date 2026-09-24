@@ -1,0 +1,22 @@
+<footer class="site-footer">
+  <div class="container">
+    <div class="footer-top">
+      <div>
+        <div class="footer-brand-title">UJVAL THAKOR</div>
+        <div class="footer-brand-subtitle">BACKEND DEVELOPER · PYTHON • DJANGO • APIs • AI</div>
+      </div>
+
+      <div class="footer-links">
+        <a href="{{ profile.github_url }}" target="_blank" rel="noopener" class="footer-link">GitHub</a>
+        <a href="{{ profile.linkedin_url }}" target="_blank" rel="noopener" class="footer-link">LinkedIn</a>
+        <a href="mailto:{{ profile.email }}" class="footer-link">Email</a>
+        <a href="{% url 'core:resume_view' %}" class="footer-link">Resume</a>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <div>© {{ current_year }} Ujval Thakor. Engineered with Django & Python.</div>
+      <div>Surat, Gujarat, India</div>
+    </div>
+  </div>
+</footer>

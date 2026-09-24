@@ -1,0 +1,94 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Selected Work & Backend Systems — Ujval Thakor{% endblock %}
+{% block meta_description %}Explore backend systems, APIs, management platforms, and computer vision pipelines built with Python and Django by Ujval Thakor.{% endblock %}
+
+{% block content %}
+<section class="case-study-hero" style="padding-top: 8.5rem; padding-bottom: 3.5rem;">
+  <div class="container">
+    <div class="section-label reveal-init">ENGINEERING CATALOGUE</div>
+    <h1 class="section-title reveal-init delay-1">SELECTED <span class="accent">WORK</span>.</h1>
+    <p class="section-subtitle reveal-init delay-2">
+      An archive of backend services, RESTful APIs, database platforms, and real-time computer vision systems built with Python and Django.
+    </p>
+
+    <!-- Category Filter Bar -->
+    <div style="display: flex; flex-wrap: wrap; gap: 0.65rem; margin-top: 2.5rem;" class="reveal-init delay-3">
+      <a href="{% url 'projects:list' %}" class="btn btn-sm {% if not selected_category %}btn-primary{% else %}btn-secondary{% endif %}">
+        ALL SYSTEMS ({{ total_count }})
+      </a>
+      {% for cat in categories %}
+      <a href="?category={{ cat|urlencode }}" class="btn btn-sm {% if selected_category == cat %}btn-primary{% else %}btn-secondary{% endif %}">
+        {{ cat|upper }}
+      </a>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<section class="section section--no-border">
+  <div class="container">
+    <div class="projects-list">
+      {% for project in projects %}
+      <article class="project-card reveal-init">
+        <div class="project-card-header">
+          <span class="project-num">{{ project.project_number }}</span>
+          <span class="project-category-badge">{{ project.category }}</span>
+        </div>
+
+        <div class="project-card-content">
+          <div>
+            <h2 class="project-title">
+              <a href="{% url 'projects:detail' slug=project.slug %}">{{ project.title }}</a>
+            </h2>
+            <p class="project-summary">{{ project.short_description }}</p>
+
+            <div class="project-tech-tags">
+              {% for tech in project.technologies.all %}
+              <span class="tech-tag">{{ tech.name }}</span>
+              {% endfor %}
+            </div>
+
+            <div class="project-links">
+              <a href="{% url 'projects:detail' slug=project.slug %}" class="project-link-item" style="color: var(--accent);">
+                <span>VIEW CASE STUDY</span>
+                <span>→</span>
+              </a>
+              {% if project.github_url %}
+              <a href="{{ project.github_url }}" target="_blank" rel="noopener" class="project-link-item">
+                <span>GITHUB REPO</span>
+                <span>↗</span>
+              </a>
+              {% endif %}
+              {% if project.live_url %}
+              <a href="{{ project.live_url }}" target="_blank" rel="noopener" class="project-link-item">
+                <span>LIVE DEMO</span>
+                <span>↗</span>
+              </a>
+              {% endif %}
+            </div>
+          </div>
+
+          <div class="project-preview-schematic">
+            <div class="schematic-header">
+              <span>SYSTEM ARCHITECTURE PREVIEW</span>
+              <span>{{ project.year }}</span>
+            </div>
+            <div class="schematic-flow-preview">
+              {{ project.architecture_flow|truncatechars:180 }}
+            </div>
+            <span class="schematic-badge">DJANGO ORM · PRODUCTION READY</span>
+          </div>
+        </div>
+      </article>
+      {% empty %}
+      <div style="padding: 4rem 2rem; text-align: center; border: 1px dashed var(--border); border-radius: var(--radius-md);">
+        <p style="color: var(--text-muted); font-size: 1.1rem; margin-bottom: 1.5rem;">No projects matched the selected category filter.</p>
+        <a href="{% url 'projects:list' %}" class="btn btn-secondary btn-sm">CLEAR FILTER</a>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+{% endblock %}
