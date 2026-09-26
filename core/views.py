@@ -160,7 +160,7 @@ def sitemap_xml(request):
     urls = [
         f"<url><loc>{base_url}/</loc><priority>1.0</priority><changefreq>weekly</changefreq></url>",
         f"<url><loc>{base_url}/about/</loc><priority>0.8</priority><changefreq>monthly</changefreq></url>",
-        f"<url><loc>{base_url}/work/</loc><priority>0.9</priority><changefreq>weekly</changefreq></url>",
+        f"<url><loc>{base_url}/projects/</loc><priority>0.9</priority><changefreq>weekly</changefreq></url>",
         f"<url><loc>{base_url}/contact/</loc><priority>0.7</priority><changefreq>monthly</changefreq></url>",
         f"<url><loc>{base_url}/resume/</loc><priority>0.8</priority><changefreq>monthly</changefreq></url>",
     ]

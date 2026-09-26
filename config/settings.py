@@ -25,6 +25,7 @@ INSTALLED_APPS = [
     'core.apps.CoreConfig',
     'projects.apps.ProjectsConfig',
     'contact.apps.ContactConfig',
+    'chatbot.apps.ChatbotConfig',
 ]
 
 MIDDLEWARE = [

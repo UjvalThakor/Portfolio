@@ -1,0 +1,163 @@
+{% load static %}
+<!-- ==========================================================================
+     PORTFOLIO AI CHATBOT (Native Douglus Neo-Grotesque Assistant)
+     ========================================================================== -->
+<div id="portfolio-chatbot-root" class="portfolio-chatbot-root" data-csrf="{{ csrf_token }}">
+
+  <!-- Floating Trigger Squircle Button -->
+  <button type="button" 
+          id="chatbot-trigger" 
+          class="chatbot-trigger" 
+          aria-label="Open Ujval's AI Assistant" 
+          aria-expanded="false"
+          aria-controls="chatbot-window"
+          title="Ask Ujval's AI (⌘K)">
+    <div class="chatbot-trigger-inner">
+      <!-- Chat Icon SVG -->
+      <svg class="chatbot-icon-svg" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <path d="M21 11.5C21.0034 12.8199 20.6951 14.1219 20.1 15.3C19.3944 16.7118 18.3098 17.8992 16.9674 18.7293C15.6251 19.5594 14.0782 19.9994 12.5 20C11.1801 20.0035 9.87812 19.6951 8.7 19.1L3 21L4.9 15.3C4.30493 14.1219 3.99656 12.8199 4 11.5C4.00061 9.92179 4.44061 8.37488 5.27072 7.03258C6.10083 5.69028 7.28825 4.6056 8.7 3.90003C9.87812 3.30496 11.1801 2.99659 12.5 3.00003H13C15.0843 3.11502 17.053 3.99479 18.5291 5.47089C20.0052 6.94699 20.885 8.91568 21 11V11.5Z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+        <circle cx="8.5" cy="11.5" r="1" fill="currentColor"/>
+        <circle cx="12.5" cy="11.5" r="1" fill="currentColor"/>
+        <circle cx="16.5" cy="11.5" r="1" fill="currentColor"/>
+      </svg>
+      <!-- Close Icon SVG -->
+      <svg class="chatbot-close-svg" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <path d="M18 6L6 18M6 6L18 18" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+      <!-- Online Status Dot Indicator -->
+      <span class="chat-trigger-status-dot" aria-hidden="true"></span>
+    </div>
+    <!-- Hover Tooltip Pill -->
+    <span class="chatbot-trigger-tooltip" aria-hidden="true">
+      Ask Ujval's AI <span class="kbd-pill">⌘K</span>
+    </span>
+  </button>
+
+  <!-- Chatbot Window Interface -->
+  <aside id="chatbot-window" 
+         class="chatbot-window" 
+         role="dialog" 
+         aria-modal="true" 
+         aria-label="Ujval Thakor AI Assistant" 
+         aria-hidden="true">
+
+    <!-- Window Header -->
+    <header class="chatbot-header">
+      <div class="chatbot-header-info">
+        <div class="chatbot-avatar-squircle" aria-hidden="true">
+          <span>&gt;_</span>
+        </div>
+        <div class="chatbot-header-text">
+          <div class="chatbot-title-row">
+            <h2 class="chatbot-name">UJVAL.AI</h2>
+            <span class="chatbot-badge">SYSTEM ASSISTANT</span>
+          </div>
+          <div class="chatbot-status-row">
+            <span class="status-indicator-dot" aria-hidden="true"></span>
+            <span class="chatbot-status-text">Online &bull; Portfolio Grounded</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="chatbot-header-actions">
+        <button type="button" 
+                id="chatbot-clear-btn" 
+                class="chatbot-action-btn" 
+                title="Reset conversation history" 
+                aria-label="Clear chat conversation">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" width="16" height="16">
+            <path d="M3 6h18M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+          </svg>
+        </button>
+        <button type="button" 
+                id="chatbot-close-btn" 
+                class="chatbot-action-btn chatbot-close-btn" 
+                title="Close chat window (Esc)" 
+                aria-label="Close assistant">
+          ✕
+        </button>
+      </div>
+    </header>
+
+    <!-- Messages Container -->
+    <div id="chatbot-messages" class="chatbot-messages" aria-live="polite">
+      <!-- Initial Welcome Message -->
+      <div class="chat-message chat-message--assistant">
+        <div class="chat-bubble">
+          <p>
+            Hello! I am <strong>Ujval Thakor's Portfolio Assistant</strong>.
+          </p>
+          <p style="margin-top: 0.5rem;">
+            I can answer questions regarding Ujval's <strong>backend architecture</strong>, 
+            <strong>Python & Django systems</strong>, <strong>machine learning / OpenCV pipelines</strong>, 
+            and guide you to get in touch for contract or full-time roles.
+          </p>
+          <p style="margin-top: 0.5rem; font-size: 0.8rem; color: var(--text-muted);">
+            How can I help you today?
+          </p>
+        </div>
+        <span class="chat-time">Just now</span>
+      </div>
+
+      <!-- Quick Suggestion Prompts -->
+      <div id="chatbot-suggestions" class="chatbot-suggestions">
+        <span class="suggestions-label">// SUGGESTED INQUIRIES:</span>
+        <div class="suggestions-pills">
+          <button type="button" class="suggestion-chip" data-query="What backend technologies does Ujval specialize in?">
+            Core Tech Stack
+          </button>
+          <button type="button" class="suggestion-chip" data-query="Tell me about the BeautyCare AI project">
+            BeautyCare AI Case Study
+          </button>
+          <button type="button" class="suggestion-chip" data-query="What is Ujval's practical experience?">
+            Engineering Experience
+          </button>
+          <button type="button" class="suggestion-chip" data-query="How can I contact or hire Ujval?">
+            Get in Touch / Hire
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Typing Loading Indicator -->
+    <div id="chatbot-typing" class="chatbot-typing" style="display: none;" aria-hidden="true">
+      <div class="typing-bubble">
+        <span class="typing-dot"></span>
+        <span class="typing-dot"></span>
+        <span class="typing-dot"></span>
+      </div>
+      <span class="typing-label">Analyzing portfolio data...</span>
+    </div>
+
+    <!-- Input Footer -->
+    <footer class="chatbot-footer">
+      <form id="chatbot-form" class="chatbot-form" autocomplete="off">
+        {% csrf_token %}
+        <div class="chatbot-input-wrapper">
+          <input type="text" 
+                 id="chatbot-input" 
+                 name="message" 
+                 class="chatbot-input" 
+                 placeholder="Ask about projects, stack, or experience..." 
+                 maxlength="500" 
+                 required 
+                 aria-label="Your message to Ujval's Assistant" />
+          <button type="submit" 
+                  id="chatbot-send-btn" 
+                  class="chatbot-send-btn" 
+                  aria-label="Send message" 
+                  title="Send message (Enter)">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="18" height="18">
+              <line x1="5" y1="12" x2="19" y2="12"></line>
+              <polyline points="12 5 19 12 12 19"></polyline>
+            </svg>
+          </button>
+        </div>
+        <div class="chatbot-footer-hint">
+          <span>Grounded in authentic portfolio data &bull; <kbd>Enter</kbd> to send</span>
+        </div>
+      </form>
+    </footer>
+
+  </aside>
+</div>

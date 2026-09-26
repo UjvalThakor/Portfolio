@@ -13,3 +13,5 @@ staticfiles/
 .env
 .DS_Store
 *.log
+scratch/
+

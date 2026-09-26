@@ -243,8 +243,7 @@ specializing in Python, Django, REST APIs, and AI integrations.{% endblock %}
           <span class="resume-entry-title">{{ p.title }}</span>
           <span class="resume-entry-meta">{{ p.year }}</span>
         </div>
-        <div class="resume-entry-company">{{ p.category }} · Stack: {% for t in p.technologies.all %}{{ t.name }}{% if
-          not forloop.last %}, {% endif %}{% endfor %}</div>
+        <div class="resume-entry-company">{{ p.category }} · Stack: {% for t in p.technologies.all %}{{ t.name }}{% if not forloop.last %}, {% endif %}{% endfor %}</div>
         <p style="color: var(--text-muted); font-size: 0.92rem; line-height: 1.5;">{{ p.short_description }}</p>
       </div>
       {% endfor %}

@@ -41,11 +41,12 @@
 
   <link rel="stylesheet" href="{% static 'css/cursor.css' %}?v={% now 'U' %}">
   <link rel="stylesheet" href="{% static 'css/animations.css' %}?v={% now 'U' %}">
+  <link rel="stylesheet" href="{% static 'css/chatbot.css' %}?v={% now 'U' %}">
 
   {% block extra_head %}{% endblock %}
 </head>
 
-<body>
+<body class="{% if request.path == '/' %}body--home{% else %}body--page{% endif %}">
 
   <!-- Preloader (Douglus-inspired Editorial Entrance) -->
   <div id="preloader" class="preloader" aria-hidden="true">
@@ -68,8 +69,10 @@
     {% block content %}{% endblock %}
   </main>
 
-  <!-- Footer -->
+  <!-- Footer (for internal pages) -->
+  {% if request.path != '/' %}
   {% include 'components/footer.html' %}
+  {% endif %}
 
   <!-- HTMX for dynamic interactions without SPA bloat -->
   <script src="https://unpkg.com/htmx.org@1.9.12"
@@ -101,7 +104,10 @@
   <!-- JavaScript Modules -->
   <script src="{% static 'js/main.js' %}?v={% now 'U' %}"></script>
   <script src="{% static 'js/cursor.js' %}?v={% now 'U' %}"></script>
+  <script src="{% static 'js/chatbot.js' %}?v={% now 'U' %}"></script>
 
+  <!-- Portfolio AI Chatbot Component -->
+  {% include 'components/chatbot.html' %}
 
   {% block extra_scripts %}{% endblock %}
 </body>

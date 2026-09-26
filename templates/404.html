@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}404 — Page Not Found | Ujval Thakor{% endblock %}
+{% block meta_description %}The requested URL was not found on this server.{% endblock %}
+
+{% block content %}
+<section style="min-height: calc(100vh - 80px); display: flex; align-items: center; justify-content: center; padding: 4rem 1.5rem; text-align: center;">
+  <div class="container" style="max-width: 680px; margin: 0 auto;">
+    <div style="font-family: var(--font-mono); font-size: 0.85rem; letter-spacing: 0.15em; color: var(--accent); margin-bottom: 1rem; text-transform: uppercase;">
+      // ERROR 404 · ROUTE NOT RESOLVED
+    </div>
+
+    <h1 style="font-family: var(--font-display); font-size: clamp(3.5rem, 8vw, 6.5rem); font-weight: 900; letter-spacing: -0.05em; line-height: 0.95; margin-bottom: 1.5rem; color: #000000;">
+      PAGE NOT <span style="color: var(--accent);">FOUND</span>.
+    </h1>
+
+    <p style="font-size: 1.15rem; color: var(--text-muted); line-height: 1.6; margin-bottom: 2.5rem;">
+      The endpoint or resource you requested does not exist on this server, or may have been relocated in the latest deployment.
+    </p>
+
+    <div style="display: flex; flex-wrap: wrap; gap: 1rem; justify-content: center;">
+      <a href="{% url 'core:home' %}" class="btn btn-primary" style="display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.85rem 1.8rem; background: #000; color: #fff; font-family: var(--font-mono); font-size: 0.85rem; font-weight: 600; border-radius: 4px; text-decoration: none;">
+        <span>RETURN TO HOME</span>
+        <span>→</span>
+      </a>
+      <a href="{% url 'projects:list' %}" class="btn btn-secondary" style="display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.85rem 1.8rem; border: 1px solid var(--border-strong); color: #000; font-family: var(--font-mono); font-size: 0.85rem; font-weight: 600; border-radius: 4px; text-decoration: none;">
+        <span>EXPLORE SYSTEMS</span>
+      </a>
+    </div>
+  </div>
+</section>
+{% endblock %}

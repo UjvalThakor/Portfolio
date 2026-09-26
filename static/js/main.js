@@ -10,6 +10,8 @@ document.addEventListener('DOMContentLoaded', () => {
   initScrollObserver();
   initMagneticButtons();
   initPassionPanel();
+  initContactInteractions();
+  initMobileNav();
 });
 
 /* 1. PRELOADER SEQUENCE */
@@ -74,6 +76,31 @@ function initHorizontalScroll() {
   // Wheel listener: Forward wheel (deltaY > 0) -> moves right (forward);
   // Reverse wheel (deltaY < 0) -> moves left (backward / returning to previous pages)
   window.addEventListener('wheel', (e) => {
+    // If target or any ancestor is a vertically scrollable element with remaining scroll space, allow native vertical scrolling
+    let target = e.target;
+    let isInsideScrollable = false;
+    while (target && target !== canvas && target !== document.body) {
+      if (target.scrollHeight > target.clientHeight) {
+        const style = window.getComputedStyle(target);
+        if (
+          style.overflowY === 'auto' || style.overflowY === 'scroll' ||
+          style.overflow === 'auto' || style.overflow === 'scroll'
+        ) {
+          const atTop = target.scrollTop <= 0 && e.deltaY < 0;
+          const atBottom = (target.scrollTop + target.clientHeight >= target.scrollHeight - 2) && e.deltaY > 0;
+          if (!atTop && !atBottom) {
+            isInsideScrollable = true;
+            break;
+          }
+        }
+      }
+      target = target.parentElement;
+    }
+
+    if (isInsideScrollable) {
+      return; // Allow native vertical scroll
+    }
+
     e.preventDefault();
 
     // Calculate scroll amount
@@ -94,17 +121,29 @@ function initHorizontalScroll() {
       progressBar.style.width = `${Math.min(100, Math.max(0, percent))}%`;
     }
 
-    if (indicatorLabel && panels.length > 0) {
+    if (panels.length > 0) {
       let currentLabel = '01 / HERO';
+      let activeId = 'hero';
       panels.forEach(panel => {
         const offsetLeft = panel.offsetLeft;
         const width = panel.offsetWidth;
-        if (scrollLeft >= offsetLeft - 120 && scrollLeft < offsetLeft + width - 120) {
+        if (scrollLeft >= offsetLeft - 160 && scrollLeft < offsetLeft + width - 160) {
           const panelTitle = panel.getAttribute('data-title');
           if (panelTitle) currentLabel = panelTitle;
+          activeId = panel.id;
         }
       });
-      indicatorLabel.textContent = currentLabel;
+      if (indicatorLabel) indicatorLabel.textContent = currentLabel;
+
+      // Update fixed navigation active highlights
+      const navWork = document.getElementById('nav-link-work');
+      const navAbout = document.getElementById('nav-link-about');
+      const navContact = document.getElementById('nav-link-contact');
+      if (navWork && navAbout && navContact) {
+        navWork.classList.toggle('is-active', activeId === 'work');
+        navAbout.classList.toggle('is-active', activeId === 'about' || activeId === 'passion');
+        navContact.classList.toggle('is-active', activeId === 'contact');
+      }
     }
   }
 
@@ -420,4 +459,126 @@ function initPassionPanel() {
     });
   }
 }
+
+/* 7. CONTACT STAGE MICRO-INTERACTIONS (Douglus Editorial Live Systems) */
+function initContactInteractions() {
+  // Copy Email to Clipboard with tactile badge feedback
+  const copyBtn = document.getElementById('chat-copy-email-btn');
+  if (copyBtn) {
+    copyBtn.addEventListener('click', async () => {
+      const email = copyBtn.getAttribute('data-email') || 'ujvalthakor14@gmail.com';
+      try {
+        await navigator.clipboard.writeText(email);
+        const label = copyBtn.querySelector('.pill-copy-text');
+        const icon = copyBtn.querySelector('.pill-icon');
+        const origText = label ? label.textContent : 'Copy Email';
+        const origIcon = icon ? icon.textContent : '📋';
+
+        copyBtn.classList.add('is-copied');
+        if (label) label.textContent = 'COPIED TO CLIPBOARD ✓';
+        if (icon) icon.textContent = '✓';
+
+        setTimeout(() => {
+          copyBtn.classList.remove('is-copied');
+          if (label) label.textContent = origText;
+          if (icon) icon.textContent = origIcon;
+        }, 2200);
+      } catch (err) {
+        // Fallback for non-https contexts
+        const textarea = document.createElement('textarea');
+        textarea.value = email;
+        textarea.style.position = 'fixed';
+        textarea.style.opacity = '0';
+        document.body.appendChild(textarea);
+        textarea.select();
+        document.execCommand('copy');
+        document.body.removeChild(textarea);
+
+        copyBtn.classList.add('is-copied');
+        const label = copyBtn.querySelector('.pill-copy-text');
+        if (label) label.textContent = 'COPIED TO CLIPBOARD ✓';
+        setTimeout(() => {
+          copyBtn.classList.remove('is-copied');
+          if (label) label.textContent = 'Copy Email';
+        }, 2200);
+      }
+    });
+  }
+
+  // Squircle Widget tactile click
+  const contactSquircle = document.querySelector('.chat-widget-squircle');
+  if (contactSquircle) {
+    contactSquircle.addEventListener('click', () => {
+      contactSquircle.style.transform = 'scale(0.88) rotate(-8deg)';
+      setTimeout(() => {
+        contactSquircle.style.transform = 'scale(1.1) rotate(4deg)';
+      }, 120);
+      setTimeout(() => {
+        contactSquircle.style.transform = '';
+      }, 300);
+    });
+  }
+}
+
+/* 8. MOBILE NAVIGATION DRAWER */
+function initMobileNav() {
+  const toggleBtn = document.getElementById('mobile-toggle');
+  const drawer = document.getElementById('mobile-drawer');
+  const backdrop = document.getElementById('mobile-drawer-backdrop');
+  const closeBtn = document.getElementById('mobile-drawer-close');
+
+  if (!toggleBtn || !drawer) return;
+
+  function openDrawer() {
+    drawer.classList.add('is-open');
+    toggleBtn.classList.add('is-open');
+    toggleBtn.setAttribute('aria-expanded', 'true');
+    drawer.setAttribute('aria-hidden', 'false');
+    if (backdrop) backdrop.classList.add('is-open');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeDrawer() {
+    drawer.classList.remove('is-open');
+    toggleBtn.classList.remove('is-open');
+    toggleBtn.setAttribute('aria-expanded', 'false');
+    drawer.setAttribute('aria-hidden', 'true');
+    if (backdrop) backdrop.classList.remove('is-open');
+    document.body.style.overflow = '';
+  }
+
+  toggleBtn.addEventListener('click', (e) => {
+    e.stopPropagation();
+    if (drawer.classList.contains('is-open')) {
+      closeDrawer();
+    } else {
+      openDrawer();
+    }
+  });
+
+  if (closeBtn) {
+    closeBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      closeDrawer();
+    });
+  }
+
+  if (backdrop) {
+    backdrop.addEventListener('click', closeDrawer);
+  }
+
+  // Close when clicking any nav link
+  const drawerLinks = drawer.querySelectorAll('a');
+  drawerLinks.forEach((link) => {
+    link.addEventListener('click', closeDrawer);
+  });
+
+  // Close on Escape key
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && drawer.classList.contains('is-open')) {
+      closeDrawer();
+    }
+  });
+}
+
 

@@ -7,9 +7,8 @@
     <div class="nav-links">
       <a href="{% url 'projects:list' %}" class="nav-link">Work</a>
       <a href="{% url 'core:about' %}" class="nav-link">About</a>
-      <a href="/#stack" class="nav-link">Stack</a>
-      <a href="/#experience" class="nav-link">Experience</a>
-      <a href="/#contact" class="nav-link">Contact</a>
+      <a href="{% url 'core:resume_view' %}" class="nav-link">Resume</a>
+      <a href="{% url 'contact:contact' %}" class="nav-link">Contact</a>
     </div>
 
     <div class="nav-actions">
@@ -20,24 +19,29 @@
       </div>
       {% endif %}
 
-      <button class="mobile-toggle" id="mobile-toggle" aria-label="Toggle Navigation Menu">
-        <span></span>
-        <span></span>
-        <span></span>
+      <button class="mobile-toggle" id="mobile-toggle" aria-label="Toggle Navigation Menu" aria-expanded="false" aria-controls="mobile-drawer">
+        <span class="toggle-bar"></span>
+        <span class="toggle-bar"></span>
+        <span class="toggle-bar"></span>
       </button>
     </div>
   </div>
 </nav>
 
+<!-- Mobile Navigation Backdrop -->
+<div class="mobile-drawer-backdrop" id="mobile-drawer-backdrop" aria-hidden="true"></div>
+
 <!-- Mobile Navigation Drawer -->
-<div class="mobile-drawer" id="mobile-drawer">
+<aside class="mobile-drawer" id="mobile-drawer" aria-label="Mobile Navigation" aria-hidden="true">
+  <div class="mobile-drawer-header">
+    <span class="mobile-drawer-brand">Ujval</span>
+    <button class="mobile-drawer-close" id="mobile-drawer-close" aria-label="Close Navigation Menu">✕</button>
+  </div>
   <div class="mobile-nav-links">
     <a href="{% url 'projects:list' %}" class="mobile-nav-link">Work</a>
     <a href="{% url 'core:about' %}" class="mobile-nav-link">About</a>
-    <a href="/#stack" class="mobile-nav-link">Stack</a>
-    <a href="/#experience" class="mobile-nav-link">Experience</a>
-    <a href="/#contact" class="mobile-nav-link">Contact</a>
     <a href="{% url 'core:resume_view' %}" class="mobile-nav-link">Resume</a>
+    <a href="{% url 'contact:contact' %}" class="mobile-nav-link">Contact</a>
   </div>
   <div class="mobile-footer-meta">
     <p style="font-family: var(--font-mono); font-size: 0.8rem; color: var(--text-muted); margin-bottom: 0.5rem;">
@@ -47,4 +51,4 @@
       {{ profile.email }}
     </p>
   </div>
-</div>
+</aside>

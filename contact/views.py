@@ -1,6 +1,8 @@
 from django.shortcuts import render, redirect
 from django.contrib import messages
 from django.http import HttpResponse
+from django.conf import settings
+from django.core.mail import send_mail
 from .forms import ContactForm
 from .models import ContactMessage
 
@@ -21,6 +23,29 @@ def contact_view(request):
             contact_msg = form.save(commit=False)
             contact_msg.ip_address = get_client_ip(request)
             contact_msg.save()
+
+            # Dispatch notification email to site owner
+            try:
+                subject = f"[Portfolio Contact] {contact_msg.subject}"
+                message_body = (
+                    f"New contact inquiry submitted on your portfolio:\n\n"
+                    f"Name: {contact_msg.name}\n"
+                    f"Email: {contact_msg.email}\n"
+                    f"IP Address: {contact_msg.ip_address}\n"
+                    f"Subject: {contact_msg.subject}\n\n"
+                    f"Message:\n{contact_msg.message}\n"
+                )
+                from_email = getattr(settings, 'DEFAULT_FROM_EMAIL', 'ujval@dev.local')
+                recipient = getattr(settings, 'CONTACT_NOTIFICATION_EMAIL', 'ujvalthakor14@gmail.com')
+                send_mail(
+                    subject=subject,
+                    message=message_body,
+                    from_email=from_email,
+                    recipient_list=[recipient],
+                    fail_silently=True,
+                )
+            except Exception:
+                pass
 
             if is_htmx:
                 return render(request, 'components/contact_success.html', {

@@ -2,6 +2,36 @@
 {% load static %}
 
 {% block content %}
+<!-- ==========================================================================
+     FIXED VIEWPORT TOP NAVIGATION & BOTTOM BAR (Douglus Inverting Bar)
+     Positioned fixed with mix-blend-mode: difference for seamless inversion
+     over light cream panels, colorful aura gradient, and pure black contact.
+     ========================================================================== -->
+<header class="douglus-nav douglus-nav-fixed">
+  <div class="nav-brand">
+    <a href="#hero">Ujval</a>
+  </div>
+
+  <nav class="nav-center-menu" aria-label="Primary Navigation">
+    <a href="#work" class="nav-center-link" id="nav-link-work">Works,</a>
+    <a href="#about" class="nav-center-link" id="nav-link-about">About,</a>
+    <a href="#contact" class="nav-center-link" id="nav-link-contact">Contact</a>
+  </nav>
+
+  <div class="nav-right-socials">
+    <a href="{{ profile.github_url }}" target="_blank" rel="noopener" class="nav-social-link">Github</a>
+    <a href="{{ profile.linkedin_url }}" target="_blank" rel="noopener" class="nav-social-link">LinkedIn</a>
+    <a href="mailto:{{ profile.email }}" class="nav-social-link">Email</a>
+  </div>
+</header>
+
+<!-- Fixed Viewport Bottom Footer Bar -->
+<footer class="douglus-footer-bar douglus-footer-fixed">
+  <div>© {{ current_year }} Portfolio</div>
+  <div class="statement-footer-dash" aria-hidden="true"></div>
+  <div>Design &amp; code by <span class="footer-author-highlight">Ujval</span></div>
+</footer>
+
 <!-- Horizontal Progress Line at bottom of viewport -->
 <div class="h-progress-line" aria-hidden="true">
   <div class="h-progress-fill" id="h-progress-bar"></div>
@@ -25,25 +55,6 @@
        PANEL 1: HERO CANVAS (Exact Screen from Douglus Screenshot)
        ======================================================================== -->
   <section class="h-panel h-panel-hero" id="hero" data-title="01 / HERO">
-
-    <!-- Top Navigation Bar -->
-    <header class="douglus-nav">
-      <div class="nav-brand">
-        <a href="#hero">Ujval</a>
-      </div>
-
-      <nav class="nav-center-menu" aria-label="Primary Navigation">
-        <a href="#work" class="nav-center-link">Works,</a>
-        <a href="#architecture" class="nav-center-link">About,</a>
-        <a href="#contact" class="nav-center-link">Contact</a>
-      </nav>
-
-      <div class="nav-right-socials">
-        <a href="{{ profile.github_url }}" target="_blank" rel="noopener" class="nav-social-link">Github</a>
-        <a href="{{ profile.linkedin_url }}" target="_blank" rel="noopener" class="nav-social-link">LinkedIn</a>
-        <a href="mailto:{{ profile.email }}" class="nav-social-link">Email</a>
-      </div>
-    </header>
 
     <!-- Main Hero Canvas Layout -->
     <div class="hero-canvas">
@@ -89,16 +100,6 @@
 
     </div>
 
-    <!-- Bottom Bar: © 2026 Portfolio | Scroll Indicator | Design & Code by Ujval -->
-    <footer class="douglus-footer-bar">
-      <div>© {{ current_year }} Portfolio</div>
-      <div style="display: flex; align-items: center; gap: 1.5rem;">
-        <span style="font-family: var(--font-mono); font-size: 0.72rem; color: #777;">SCROLL MOUSE WHEEL HORIZONTALLY
-          →</span>
-        <span>Design & code by Ujval</span>
-      </div>
-    </footer>
-
   </section>
 
 
@@ -106,25 +107,6 @@
        PANEL 2: PASSION & DISCIPLINES CANVAS (Exact Douglus 02/ Screen)
        ======================================================================== -->
   <section class="h-panel h-panel-passion" id="passion" data-title="02 / PASSION">
-
-    <!-- Top Navigation Bar -->
-    <header class="douglus-nav">
-      <div class="nav-brand">
-        <a href="#hero">Ujval</a>
-      </div>
-
-      <nav class="nav-center-menu" aria-label="Primary Navigation">
-        <a href="#work" class="nav-center-link">Works,</a>
-        <a href="#passion" class="nav-center-link">About,</a>
-        <a href="#contact" class="nav-center-link">Contact</a>
-      </nav>
-
-      <div class="nav-right-socials">
-        <a href="{{ profile.github_url }}" target="_blank" rel="noopener" class="nav-social-link">Github</a>
-        <a href="{{ profile.linkedin_url }}" target="_blank" rel="noopener" class="nav-social-link">LinkedIn</a>
-        <a href="mailto:{{ profile.email }}" class="nav-social-link">Email</a>
-      </div>
-    </header>
 
     <!-- Main Passion Canvas Layout -->
     <div class="passion-canvas">
@@ -197,12 +179,6 @@
 
     </div>
 
-    <!-- Bottom Bar: © 2026 Portfolio | Design & Code by Ujval -->
-    <footer class="douglus-footer-bar">
-      <div>© {{ current_year }} Portfolio</div>
-      <div>Design & code by Ujval</div>
-    </footer>
-
   </section>
 
 
@@ -211,25 +187,6 @@
        Cosmic Insights Astrology — Live Platform Integration
        ======================================================================== -->
   <section class="h-panel h-panel-feature" id="work" data-title="03 / WORK">
-
-    <!-- Top Navigation Bar -->
-    <header class="douglus-nav">
-      <div class="nav-brand">
-        <a href="#hero">Ujval</a>
-      </div>
-
-      <nav class="nav-center-menu" aria-label="Primary Navigation">
-        <a href="#work" class="nav-center-link is-active">Works,</a>
-        <a href="#passion" class="nav-center-link">About,</a>
-        <a href="#contact" class="nav-center-link">Contact</a>
-      </nav>
-
-      <div class="nav-right-socials">
-        <a href="{{ profile.github_url }}" target="_blank" rel="noopener" class="nav-social-link">Github</a>
-        <a href="{{ profile.linkedin_url }}" target="_blank" rel="noopener" class="nav-social-link">LinkedIn</a>
-        <a href="mailto:{{ profile.email }}" class="nav-social-link">Email</a>
-      </div>
-    </header>
 
     <!-- Main Feature Showcase Stage -->
     <div class="feature-stage">
@@ -314,12 +271,11 @@
 
     </div>
 
-    <!-- Bottom Row: 03/ Index, Title, Center Dash, Description & Credits -->
+    <!-- Bottom Row: 03/ Index, Title, Center Dash, Description -->
     <div class="feature-bottom-row">
 
       <div class="feature-bottom-left">
         <div class="feature-meta-index">03/</div>
-        <div class="feature-copyright">© {{ current_year }} Portfolio</div>
       </div>
 
       <div class="feature-bottom-title">
@@ -337,9 +293,6 @@
             alignments, and destiny blueprints in real time.
           </p>
         </div>
-        <div class="feature-credit">
-          Design &amp; code by Ujval
-        </div>
       </div>
 
     </div>
@@ -349,30 +302,15 @@
 
   <!-- ========================================================================
        PANEL 4: CREATIVE STATEMENT & PHILOSOPHY (Exact Video Reference)
+       Seamless Sunset Aura Gradient blending into Panel 5
        ======================================================================== -->
   <section class="h-panel h-panel-statement" id="about" data-title="04 / ABOUT">
 
-    <!-- Glowing Pink-Orange-Black Atmospheric Gradient on Right Edge -->
-    <div class="statement-blob-orb" aria-hidden="true"></div>
-
-    <!-- Top Navigation Bar -->
-    <header class="douglus-nav">
-      <div class="nav-brand">
-        <a href="#hero">Ujval</a>
-      </div>
-
-      <nav class="nav-center-menu" aria-label="Primary Navigation">
-        <a href="#work" class="nav-center-link">Works,</a>
-        <a href="#about" class="nav-center-link is-active">About,</a>
-        <a href="#contact" class="nav-center-link">Contact</a>
-      </nav>
-
-      <div class="nav-right-socials">
-        <a href="{{ profile.github_url }}" target="_blank" rel="noopener" class="nav-social-link">Github</a>
-        <a href="{{ profile.linkedin_url }}" target="_blank" rel="noopener" class="nav-social-link">LinkedIn</a>
-        <a href="mailto:{{ profile.email }}" class="nav-social-link">Email</a>
-      </div>
-    </header>
+    <!-- Seamless Sunset Aura Gradient blending into Panel 5 -->
+    <div class="statement-aura-backdrop" aria-hidden="true">
+      <img src="{% static 'images/h_crop_gradient.webp' %}" class="statement-aura-img" alt="">
+      <div class="statement-aura-blackout"></div>
+    </div>
 
     <!-- Sub-header: Roles (Aligned with 27vw grid) -->
     <div class="statement-roles-row">
@@ -399,77 +337,140 @@
       <div class="statement-giant-name" aria-label="UJVAL">UJVAL</div>
     </div>
 
-    <!-- Bottom Bar -->
-    <footer class="douglus-footer-bar">
-      <div>© {{ current_year }} Portfolio</div>
-      <div class="statement-footer-dash" aria-hidden="true"></div>
-      <div>Design &amp; code by <span class="footer-author-highlight">Ujval</span></div>
-    </footer>
-
   </section>
 
 
   <!-- ========================================================================
-       PANEL 5: CONTACT — LET'S HAVE A CHAT (Exact Video Reference)
+       PANEL 5: CONTACT — LET'S HAVE A CHAT (Douglus Awwwards Editorial Finale)
+       Seamless continuous black canvas perfectly unified with portfolio design language
        ======================================================================== -->
   <section class="h-panel h-panel-contact-chat" id="contact" data-title="05 / CONTACT">
 
-    <!-- Top Navigation Bar -->
-    <header class="douglus-nav douglus-nav-dark">
-      <div class="nav-brand">
-        <a href="#hero" style="color: #f5f0e8;">Ujval</a>
+    <div class="chat-stage-container">
+
+      <!-- Top Meta Row: Matches Panels 1, 2, 3 Editorial System -->
+      <div class="chat-meta-row">
+        <div class="chat-meta-badge">
+          <span class="chat-meta-index">05/</span>
+          <span class="chat-meta-status">AVAILABLE FOR CONTRACT &amp; FULL-TIME ROLES</span>
+        </div>
+        <div class="chat-meta-location">
+          <span>SURAT, GUJARAT, INDIA</span>
+          <span class="meta-separator">·</span>
+          <span>UTC+5:30</span>
+        </div>
       </div>
 
-      <nav class="nav-center-menu" aria-label="Primary Navigation">
-        <a href="#work" class="nav-center-link nav-link-dark">Works,</a>
-        <a href="#about" class="nav-center-link nav-link-dark">About,</a>
-        <a href="#contact" class="nav-center-link nav-link-dark is-active">Contact</a>
-      </nav>
+      <!-- Monumental Headline Stage with Ceramic Squircle Widget (Signature Douglus motif) -->
+      <div class="chat-stage-header">
+        <!-- Floating Ceramic Squircle Widget (Echoing Panels 1, 2, 3) -->
+        <div class="chat-widget-squircle" title="Terminal Direct Link" data-cursor="pointer">
+          <svg class="chat-widget-svg" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M 30 32 L 48 50 L 30 68" stroke="#F5ECE0" stroke-width="8" stroke-linecap="round" stroke-linejoin="round" />
+            <line x1="56" y1="68" x2="74" y2="68" stroke="#FF5B38" stroke-width="8" stroke-linecap="round" />
+          </svg>
+        </div>
 
-      <div class="nav-right-socials">
-        <a href="{{ profile.github_url }}" target="_blank" rel="noopener"
-          class="nav-social-link nav-link-dark">Github</a>
-        <a href="{{ profile.linkedin_url }}" target="_blank" rel="noopener"
-          class="nav-social-link nav-link-dark">LinkedIn</a>
-        <a href="mailto:{{ profile.email }}" class="nav-social-link nav-link-dark">Email</a>
+        <div class="chat-headline-wrap">
+          <h2 class="chat-headline">Let's have a chat</h2>
+          <div class="chat-tagline">HAVE A SYSTEM ARCHITECTURE CHALLENGE, BACKEND ROLE, OR IDEA? LET'S CONNECT.</div>
+        </div>
       </div>
-    </header>
 
-    <!-- Main Content Container: Exactly aligned from 27vw to 85vw -->
-    <div class="chat-main-container">
-      <!-- Huge Condensed Sans-Serif Headline -->
-      <h2 class="chat-headline">Let's have a chat</h2>
-
-      <!-- Thin Horizontal Divider Line -->
       <div class="chat-divider" aria-hidden="true"></div>
 
-      <!-- Pill Buttons Row -->
-      <div class="chat-pill-row">
-        <div class="chat-pill-left-group">
-          <a href="mailto:{{ profile.email }}" class="chat-pill" id="chat-email-pill">
-            {{ profile.email }}
-          </a>
-          <a href="tel:+919104502128" class="chat-pill" id="chat-phone-pill">
-            +91 9104502128
-          </a>
+      <!-- Action & Contact Matrix: Matches Panels 2 & 3 Interactive Cluster -->
+      <div class="chat-content-grid">
+
+        <!-- Left Column: Primary Contact Action Pills & Social Badges -->
+        <div class="chat-actions-col">
+          <div class="chat-pill-row">
+            <a href="mailto:{{ profile.email|default:'ujvalthakor14@gmail.com' }}" class="chat-pill chat-pill-primary" id="chat-email-pill" title="Click to compose email" data-cursor="pointer">
+              <span class="pill-icon">✉</span>
+              <span class="pill-label">{{ profile.email|default:'ujvalthakor14@gmail.com' }}</span>
+              <span class="pill-arrow">↗</span>
+            </a>
+            <button type="button" class="chat-pill chat-copy-pill" id="chat-copy-email-btn" title="Copy email address to clipboard" data-cursor="pointer" data-email="{{ profile.email|default:'ujvalthakor14@gmail.com' }}">
+              <span class="pill-icon">📋</span>
+              <span class="pill-copy-text">Copy Email</span>
+            </button>
+            <a href="tel:+919104502128" class="chat-pill" id="chat-phone-pill" title="Direct telephone call" data-cursor="pointer">
+              <span class="pill-icon">☎</span>
+              <span class="pill-label">+91 9104502128</span>
+              <span class="pill-arrow">↗</span>
+            </a>
+            <button type="button" class="chat-pill chat-back-pill" id="chat-back-btn" data-cursor="pointer" title="Return to Statement panel"
+              onclick="const c = document.getElementById('horizontal-canvas'); const a = document.getElementById('about'); if(c &amp;&amp; a) c.scrollTo({left: a.offsetLeft, behavior: 'smooth'});">
+              <span class="back-pill-arrow">←──────</span>
+              <span class="back-pill-text">Back to Statement</span>
+            </button>
+          </div>
+
+          <!-- Social & Quick Connect Badges -->
+          <div class="chat-social-pills">
+            <a href="{{ profile.github_url }}" target="_blank" rel="noopener" class="chat-sub-pill" title="Explore GitHub repositories">
+              <span>GITHUB</span> <span class="arrow-up-right">↗</span>
+            </a>
+            <a href="{{ profile.linkedin_url }}" target="_blank" rel="noopener" class="chat-sub-pill" title="Connect on LinkedIn">
+              <span>LINKEDIN</span> <span class="arrow-up-right">↗</span>
+            </a>
+            <a href="{% url 'core:resume_view' %}" class="chat-sub-pill chat-sub-pill-accent" title="View Full Curriculum Vitae">
+              <span>VIEW CV / RESUME</span> <span class="arrow-up-right">↗</span>
+            </a>
+          </div>
+
+          <div class="chat-editorial-desc">
+            <span class="desc-arrow">(→)</span>
+            <p class="desc-text">
+              Specialized in engineering robust backend architectures, distributed microservices, and high-throughput computer vision pipelines. Direct access to developer inbox.
+            </p>
+          </div>
         </div>
-        <button type="button" class="chat-pill chat-back-pill" id="chat-back-btn"
-          onclick="document.getElementById('horizontal-canvas').scrollBy({left: -window.innerWidth, behavior: 'smooth'})">
-          <span class="back-pill-arrow">←──────</span>
-          <span class="back-pill-text">Back</span>
-        </button>
+
+        <!-- Right Column: Interactive Architectural Info Card (Matches Panel 3 JSON card style) -->
+        <div class="chat-info-card">
+          <div class="info-card-header">
+            <div class="info-card-dot-group">
+              <span class="card-dot card-dot-red"></span>
+              <span class="card-dot card-dot-yellow"></span>
+              <span class="card-dot card-dot-green"></span>
+              <span class="info-card-title">system_contact.json</span>
+            </div>
+          </div>
+
+          <div class="info-card-body">
+            <div class="info-card-stat">
+              <span class="stat-label">PRIMARY ROLE &amp; FOCUS</span>
+              <span class="stat-value">Backend Engineer &amp; Distributed Systems Architect</span>
+            </div>
+            <div class="info-card-stat">
+              <span class="stat-label">CORE ARCHITECTURE</span>
+              <span class="stat-value">Python · Django · DRF · PostgreSQL · Redis · Docker · Celery</span>
+            </div>
+            <div class="info-card-stat">
+              <span class="stat-label">AI &amp; VISION INTEGRATION</span>
+              <span class="stat-value">YOLOv8 · OpenCV · PyTorch · Inference Microservices</span>
+            </div>
+            <div class="info-card-stat">
+              <span class="stat-label">TYPICAL RESPONSE TIME</span>
+              <span class="stat-value">&lt; 12 Hours (Direct to Inbox)</span>
+            </div>
+          </div>
+
+          <!-- Bottom Card Quick Mail Action: White capsule pill matching Image 2 -->
+          <div class="info-card-action">
+            <a href="mailto:{{ profile.email|default:'ujvalthakor14@gmail.com' }}?subject=Project%20Inquiry%20%7C%20Ujval%20Thakor%20Portfolio" class="chat-card-pill" data-cursor="pointer">
+              <span class="pill-label">Start a Conversation</span>
+              <span class="pill-arrow">↗</span>
+            </a>
+          </div>
+        </div>
+
       </div>
+
     </div>
 
-    <!-- Bottom Bar -->
-    <footer class="douglus-footer-bar douglus-footer-dark">
-      <div>© {{ current_year }} Portfolio</div>
-      <div class="statement-footer-dash" style="background: rgba(245,240,232,0.3);" aria-hidden="true"></div>
-      <div>Design &amp; code by <span class="footer-author-highlight">Ujval</span></div>
-    </footer>
-
   </section>
-
 
 </div>
 {% endblock %}
