@@ -9,6 +9,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initDraggablePanorama();
   initScrollObserver();
   initMagneticButtons();
+  initPassionPanel();
 });
 
 /* 1. PRELOADER SEQUENCE */
@@ -73,16 +74,6 @@ function initHorizontalScroll() {
   // Wheel listener: Forward wheel (deltaY > 0) -> moves right (forward);
   // Reverse wheel (deltaY < 0) -> moves left (backward / returning to previous pages)
   window.addEventListener('wheel', (e) => {
-    // If hovering inside an element that needs internal vertical scroll (like terminal history)
-    const verticalScrollable = e.target.closest('#dev-terminal-screen, .scrollable-y');
-    if (verticalScrollable) {
-      const isAtTop = verticalScrollable.scrollTop === 0 && e.deltaY < 0;
-      const isAtBottom = verticalScrollable.scrollTop + verticalScrollable.clientHeight >= verticalScrollable.scrollHeight && e.deltaY > 0;
-      if (!isAtTop && !isAtBottom) {
-        return; // Allow natural scroll inside terminal
-      }
-    }
-
     e.preventDefault();
 
     // Calculate scroll amount
@@ -199,7 +190,7 @@ function initHorizontalScroll() {
 function initDraggablePanorama() {
   const frame = document.querySelector('.panorama-frame');
   const img = document.querySelector('.panorama-img');
-  const handle = document.querySelector('.drag-circle-handle');
+  const badge = document.getElementById('panorama-cursor-badge');
 
   if (!frame || !img) return;
 
@@ -209,6 +200,27 @@ function initDraggablePanorama() {
   let minTranslate = -45;
   let maxTranslate = 0;
 
+  let mouseX = 0;
+  let mouseY = 0;
+  let currentX = 0;
+  let currentY = 0;
+  let isHovered = false;
+  let animId = null;
+
+  function animateBadge() {
+    currentX += (mouseX - currentX) * 0.28;
+    currentY += (mouseY - currentY) * 0.28;
+
+    if (badge) {
+      badge.style.left = `${currentX}px`;
+      badge.style.top = `${currentY}px`;
+    }
+
+    if (isHovered || Math.abs(mouseX - currentX) > 0.1 || Math.abs(mouseY - currentY) > 0.1) {
+      animId = requestAnimationFrame(animateBadge);
+    }
+  }
+
   function updateTransform(xPercent) {
     if (xPercent < minTranslate) xPercent = minTranslate;
     if (xPercent > maxTranslate) xPercent = maxTranslate;
@@ -216,24 +228,63 @@ function initDraggablePanorama() {
     img.style.transform = `translateX(${currentTranslateX}%)`;
   }
 
+  frame.addEventListener('mouseenter', (e) => {
+    isHovered = true;
+    frame.classList.add('is-hovered');
+    document.body.classList.add('cursor-hover-photo');
+
+    const rect = frame.getBoundingClientRect();
+    mouseX = e.clientX - rect.left;
+    mouseY = e.clientY - rect.top;
+    currentX = mouseX;
+    currentY = mouseY;
+
+    if (badge) {
+      badge.style.left = `${currentX}px`;
+      badge.style.top = `${currentY}px`;
+    }
+
+    cancelAnimationFrame(animId);
+    animId = requestAnimationFrame(animateBadge);
+  });
+
+  frame.addEventListener('mousemove', (e) => {
+    const rect = frame.getBoundingClientRect();
+    mouseX = e.clientX - rect.left;
+    mouseY = e.clientY - rect.top;
+
+    if (!isHovered) {
+      isHovered = true;
+      frame.classList.add('is-hovered');
+      document.body.classList.add('cursor-hover-photo');
+      cancelAnimationFrame(animId);
+      animId = requestAnimationFrame(animateBadge);
+    }
+  });
+
+  frame.addEventListener('mouseleave', () => {
+    isHovered = false;
+    frame.classList.remove('is-hovered');
+    document.body.classList.remove('cursor-hover-photo');
+  });
+
   frame.addEventListener('mousedown', (e) => {
     isDown = true;
     startX = e.pageX;
-    frame.style.cursor = 'grabbing';
-    if (handle) handle.style.transform = 'translateY(-50%) scale(1.1)';
+    frame.classList.add('is-dragging');
+    document.body.classList.add('cursor-dragging');
   });
 
   window.addEventListener('mouseup', () => {
     if (isDown) {
       isDown = false;
-      frame.style.cursor = 'grab';
-      if (handle) handle.style.transform = 'translateY(-50%) scale(1)';
+      frame.classList.remove('is-dragging');
+      document.body.classList.remove('cursor-dragging');
     }
   });
 
-  frame.addEventListener('mousemove', (e) => {
+  window.addEventListener('mousemove', (e) => {
     if (!isDown) return;
-    e.preventDefault();
     const x = e.pageX;
     const walk = (x - startX) * 0.12;
     updateTransform(currentTranslateX + walk);
@@ -298,3 +349,75 @@ function initMagneticButtons() {
     });
   });
 }
+
+/* 6. PASSION & DISCIPLINES INTERACTION (Douglus 02/ Panel) */
+function initPassionPanel() {
+  const words = document.querySelectorAll('.passion-word');
+  const smiley = document.querySelector('.passion-widget-circle');
+  const dial = document.querySelector('.passion-widget-squircle');
+  const moreBtn = document.querySelector('.passion-pill-btn');
+  const canvas = document.getElementById('horizontal-canvas');
+
+  // Word selection interaction
+  words.forEach(word => {
+    word.addEventListener('click', () => {
+      words.forEach(w => w.classList.remove('is-active'));
+      word.classList.add('is-active');
+    });
+  });
+
+  // Widget 1 (Squircle): Tactile dial - spins dial on click, does NOT change emoji
+  const widget1 = document.getElementById('widget-dev-squircle') || document.querySelector('.passion-widget-squircle');
+  if (widget1) {
+    let dialAngle = 0;
+    widget1.addEventListener('click', () => {
+      dialAngle += 90;
+      const dialInner = widget1.querySelector('.widget-dial');
+      if (dialInner) dialInner.style.transform = `rotate(${dialAngle}deg)`;
+    });
+  }
+
+  // Widget 2 (Circle): Option B (Sideways Bracket Wink)
+  // Has tactile spring bounce & wink micro-interaction on click
+  const smileWidget = document.getElementById('widget-dev-circle') || document.querySelector('.passion-widget-circle');
+  const smileContainer = document.getElementById('widget-smile-container');
+
+  if (smileWidget && smileContainer) {
+    let isWinkBlinking = false;
+
+    smileWidget.addEventListener('click', () => {
+      if (isWinkBlinking) return;
+      isWinkBlinking = true;
+
+      // Spring tactile bounce & playful nod
+      smileWidget.style.transform = 'scale(0.88) translateY(3px)';
+      smileContainer.style.transform = 'rotate(-12deg) scale(0.92)';
+
+      setTimeout(() => {
+        smileWidget.style.transform = 'scale(1.12) translateY(-4px)';
+        smileContainer.style.transform = 'rotate(10deg) scale(1.08)';
+      }, 120);
+
+      setTimeout(() => {
+        smileWidget.style.transform = '';
+        smileContainer.style.transform = '';
+        isWinkBlinking = false;
+      }, 340);
+    });
+  }
+
+  // Smooth scroll to about panel
+  if (moreBtn && canvas) {
+    moreBtn.addEventListener('click', (e) => {
+      const aboutPanel = document.getElementById('about');
+      if (aboutPanel) {
+        e.preventDefault();
+        canvas.scrollTo({
+          left: aboutPanel.offsetLeft,
+          behavior: 'smooth'
+        });
+      }
+    });
+  }
+}
+

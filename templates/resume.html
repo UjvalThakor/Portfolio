@@ -2,7 +2,8 @@
 {% load static %}
 
 {% block title %}Resume — Ujval Thakor | Backend Developer{% endblock %}
-{% block meta_description %}Official resume of Ujval Thakor, Backend Developer and Computer Engineering student specializing in Python, Django, REST APIs, and AI integrations.{% endblock %}
+{% block meta_description %}Official resume of Ujval Thakor, Backend Developer and Computer Engineering student
+specializing in Python, Django, REST APIs, and AI integrations.{% endblock %}
 
 {% block extra_head %}
 <style>
@@ -98,9 +99,16 @@
       background: white !important;
       color: black !important;
     }
-    body::before, .site-nav, .site-footer, .custom-cursor-dot, .custom-cursor-ring, .no-print {
+
+    body::before,
+    .site-nav,
+    .site-footer,
+    .custom-cursor-dot,
+    .custom-cursor-ring,
+    .no-print {
       display: none !important;
     }
+
     .resume-paper {
       background: white !important;
       color: black !important;
@@ -110,13 +118,22 @@
       margin: 0 !important;
       max-width: 100% !important;
     }
-    .resume-name, .resume-entry-title, .resume-section-title {
+
+    .resume-name,
+    .resume-entry-title,
+    .resume-section-title {
       color: black !important;
     }
+
     .resume-title {
       color: #008040 !important;
     }
-    .resume-contact-bar, .resume-entry-company, .resume-entry-meta, p, li {
+
+    .resume-contact-bar,
+    .resume-entry-company,
+    .resume-entry-meta,
+    p,
+    li {
       color: #333 !important;
     }
   }
@@ -125,7 +142,8 @@
 
 {% block content %}
 <section class="case-study-hero" style="padding-top: 8.5rem; padding-bottom: 2rem;">
-  <div class="container" style="display: flex; justify-content: space-between; align-items: flex-end; flex-wrap: wrap; gap: 2rem;">
+  <div class="container"
+    style="display: flex; justify-content: space-between; align-items: flex-end; flex-wrap: wrap; gap: 2rem;">
     <div>
       <div class="section-label reveal-init">CURRICULUM VITAE</div>
       <h1 class="section-title reveal-init delay-1">OFFICIAL <span class="accent">RESUME</span>.</h1>
@@ -145,12 +163,12 @@
 
 <div class="container">
   <div class="resume-paper reveal-init">
-    
+
     <!-- Resume Header -->
     <header class="resume-header">
       <h2 class="resume-name">{{ profile.full_name }}</h2>
       <div class="resume-title">{{ profile.primary_title }} · {{ profile.secondary_title }}</div>
-      
+
       <div class="resume-contact-bar">
         <span>📍 {{ profile.location }}</span>
         <span>✉️ {{ profile.email }}</span>
@@ -163,14 +181,17 @@
     <section class="resume-section">
       <h3 class="resume-section-title">// PROFESSIONAL SUMMARY</h3>
       <p style="color: var(--text-muted); font-size: 1rem; line-height: 1.6;">
-        {{ profile.current_status }} {{ profile.short_positioning }} Passionate about designing resilient database schemas, high-throughput REST APIs, and integrating machine learning/computer vision inference into real-time web services.
+        {{ profile.current_status }} {{ profile.short_positioning }} Passionate about designing resilient database
+        schemas, high-throughput REST APIs, and integrating machine learning/computer vision inference into real-time
+        web services.
       </p>
     </section>
 
     <!-- Core Technical Skills -->
     <section class="resume-section">
       <h3 class="resume-section-title">// TECHNICAL SKILLS</h3>
-      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 1rem; font-family: var(--font-mono); font-size: 0.85rem;">
+      <div
+        style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 1rem; font-family: var(--font-mono); font-size: 0.85rem;">
         <div>
           <span style="color: var(--accent); display: block; margin-bottom: 0.25rem;">Backend & APIs:</span>
           <span style="color: var(--text-muted);">Python, Django, Django REST Framework, RESTful APIs, Swagger</span>
@@ -199,7 +220,8 @@
           <span class="resume-entry-title">{{ exp.role }}</span>
           <span class="resume-entry-meta">{{ exp.start_date }} — {{ exp.end_date }}</span>
         </div>
-        <div class="resume-entry-company">{{ exp.company }} · {{ exp.location }} [{{ exp.get_experience_type_display }}]</div>
+        <div class="resume-entry-company">{{ exp.company }} · {{ exp.location }} [{{ exp.get_experience_type_display }}]
+        </div>
         <p style="color: var(--text-muted); font-size: 0.95rem; margin-bottom: 0.5rem;">{{ exp.description }}</p>
         {% if exp.get_highlights_list %}
         <ul class="timeline-bullets">
@@ -221,7 +243,8 @@
           <span class="resume-entry-title">{{ p.title }}</span>
           <span class="resume-entry-meta">{{ p.year }}</span>
         </div>
-        <div class="resume-entry-company">{{ p.category }} · Stack: {% for t in p.technologies.all %}{{ t.name }}{% if not forloop.last %}, {% endif %}{% endfor %}</div>
+        <div class="resume-entry-company">{{ p.category }} · Stack: {% for t in p.technologies.all %}{{ t.name }}{% if
+          not forloop.last %}, {% endif %}{% endfor %}</div>
         <p style="color: var(--text-muted); font-size: 0.92rem; line-height: 1.5;">{{ p.short_description }}</p>
       </div>
       {% endfor %}
@@ -237,7 +260,8 @@
         </div>
         <div class="resume-entry-company">Gujarat, India</div>
         <p style="color: var(--text-muted); font-size: 0.92rem;">
-          Relevant Coursework: Database Management Systems (DBMS), Operating Systems, Data Structures & Algorithms, Computer Networks, Software Engineering.
+          Relevant Coursework: Database Management Systems (DBMS), Operating Systems, Data Structures & Algorithms,
+          Computer Networks, Software Engineering.
         </p>
       </div>
     </section>

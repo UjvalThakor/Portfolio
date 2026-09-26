@@ -1,39 +1,50 @@
 {% load static %}
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  
+
   <title>{% block title %}Ujval Thakor — Backend Developer | Python • Django • REST APIs • AI/ML{% endblock %}</title>
-  
-  <meta name="description" content="{% block meta_description %}Personal portfolio of Ujval Thakor, a Backend Developer based in Surat, India. Specializing in Python, Django, REST APIs, PostgreSQL, Redis, Docker, and AI/Computer Vision integrations.{% endblock %}">
-  <meta name="keywords" content="Ujval Thakor, Backend Developer, Python Developer, Django Developer, REST APIs, Django REST Framework, Surat Developer, India, AI ML, OpenCV, PostgreSQL">
+
+  <meta name="description"
+    content="{% block meta_description %}Personal portfolio of Ujval Thakor, a Backend Developer based in Surat, India. Specializing in Python, Django, REST APIs, PostgreSQL, Redis, Docker, and AI/Computer Vision integrations.{% endblock %}">
+  <meta name="keywords"
+    content="Ujval Thakor, Backend Developer, Python Developer, Django Developer, REST APIs, Django REST Framework, Surat Developer, India, AI ML, OpenCV, PostgreSQL">
   <meta name="author" content="Ujval Thakor">
   <meta name="robots" content="index, follow">
-  
+
   <!-- Open Graph / Facebook -->
   <meta property="og:type" content="website">
   <meta property="og:url" content="{{ request.build_absolute_uri }}">
   <meta property="og:title" content="{% block og_title %}Ujval Thakor — Backend Developer{% endblock %}">
-  <meta property="og:description" content="{% block og_description %}I build reliable backend systems, APIs, automation tools, and AI-powered applications.{% endblock %}">
+  <meta property="og:description"
+    content="{% block og_description %}I build reliable backend systems, APIs, automation tools, and AI-powered applications.{% endblock %}">
   <meta property="og:site_name" content="Ujval Thakor">
 
   <!-- Twitter / X -->
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="{% block twitter_title %}Ujval Thakor — Backend Developer{% endblock %}">
-  <meta name="twitter:description" content="{% block twitter_description %}I build reliable backend systems, APIs, automation tools, and AI-powered applications.{% endblock %}">
+  <meta name="twitter:description"
+    content="{% block twitter_description %}I build reliable backend systems, APIs, automation tools, and AI-powered applications.{% endblock %}">
 
   <link rel="canonical" href="{{ request.build_absolute_uri }}">
 
+  <!-- Google Fonts: Oswald, Inter, Syne, DM Sans -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300..900;1,9..40,300..900&family=Inter:wght@400;500;600;700;800;900&family=Oswald:wght@500;600;700&family=Syne:wght@700;800;900&display=swap" rel="stylesheet">
+
   <!-- CSS Stylesheets -->
-  <link rel="stylesheet" href="{% static 'css/main.css' %}">
-  <link rel="stylesheet" href="{% static 'css/terminal.css' %}">
-  <link rel="stylesheet" href="{% static 'css/cursor.css' %}">
-  <link rel="stylesheet" href="{% static 'css/animations.css' %}">
+  <link rel="stylesheet" href="{% static 'css/main.css' %}?v={% now 'U' %}">
+
+  <link rel="stylesheet" href="{% static 'css/cursor.css' %}?v={% now 'U' %}">
+  <link rel="stylesheet" href="{% static 'css/animations.css' %}?v={% now 'U' %}">
 
   {% block extra_head %}{% endblock %}
 </head>
+
 <body>
 
   <!-- Preloader (Douglus-inspired Editorial Entrance) -->
@@ -49,7 +60,7 @@
 
   <!-- Navigation (for internal pages) -->
   {% if request.path != '/' %}
-    {% include 'components/navbar.html' %}
+  {% include 'components/navbar.html' %}
   {% endif %}
 
   <!-- Main Content -->
@@ -61,14 +72,38 @@
   {% include 'components/footer.html' %}
 
   <!-- HTMX for dynamic interactions without SPA bloat -->
-  <script src="https://unpkg.com/htmx.org@1.9.12" integrity="sha384-ujb1lZYWyU24++NURBWvspwG98PYPYug596TCWKE2uN/8PXRF6rMrZ4nA2LQ" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/htmx.org@1.9.12"
+    integrity="sha384-ujb1lZYWyU24++NURBWvspwG98PYPYug596TCWKE2uN/8PXRF6rMrZ4nA2LQ" crossorigin="anonymous"></script>
+
+  <!-- Liquid Wave Text Distortion Filter (Exact Douglus Effect from Reference Video) -->
+  <svg class="liquid-filter-svg" style="position: absolute; width: 0; height: 0; pointer-events: none; overflow: hidden;" aria-hidden="true">
+    <defs>
+      <filter id="filter-liquid" x="-20%" y="-20%" width="140%" height="140%">
+        <feTurbulence
+          type="fractalNoise"
+          baseFrequency="0.01 0.7"
+          numOctaves="5"
+          result="warp"
+          id="fe-liquid-turbulence"
+        />
+        <feDisplacementMap
+          xChannelSelector="R"
+          yChannelSelector="G"
+          scale="0"
+          in="SourceGraphic"
+          in2="warp"
+          id="fe-liquid-displacement"
+        />
+      </filter>
+    </defs>
+  </svg>
 
   <!-- JavaScript Modules -->
-  <script src="{% static 'js/main.js' %}"></script>
-  <script src="{% static 'js/cursor.js' %}"></script>
-  <script src="{% static 'js/terminal.js' %}"></script>
-  <script src="{% static 'js/lifecycle.js' %}"></script>
+  <script src="{% static 'js/main.js' %}?v={% now 'U' %}"></script>
+  <script src="{% static 'js/cursor.js' %}?v={% now 'U' %}"></script>
+
 
   {% block extra_scripts %}{% endblock %}
 </body>
+
 </html>

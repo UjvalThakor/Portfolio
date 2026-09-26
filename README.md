@@ -96,6 +96,7 @@ docker-compose exec web python manage.py seed_portfolio
 
 - **Developer**: Ujval Thakor
 - **Location**: Surat, Gujarat, India
-- **Email**: `ujvalthakor.dev@gmail.com`
+- **Email**: `ujvalthakor14@gmail.com`
+- **Phone**: `+91 9104502128`
 - **GitHub**: [github.com/ujvalthakor](https://github.com/ujvalthakor)
 - **LinkedIn**: [linkedin.com/in/ujvalthakor](https://linkedin.com/in/ujvalthakor)

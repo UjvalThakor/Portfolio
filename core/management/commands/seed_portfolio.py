@@ -21,7 +21,7 @@ class Command(BaseCommand):
                 'available_for_work': True,
                 'github_url': 'https://github.com/ujvalthakor',
                 'linkedin_url': 'https://linkedin.com/in/ujvalthakor',
-                'email': 'ujvalthakor.dev@gmail.com',
+                'email': 'ujvalthakor14@gmail.com',
                 'hero_statement_line1': 'BACKEND',
                 'hero_statement_line2': 'ENGINEER',
                 'hero_statement_line3': 'who builds',

@@ -10,63 +10,49 @@
   position: fixed;
   top: 0;
   left: 0;
-  width: 6px;
-  height: 6px;
+  width: 4px;
+  height: 4px;
   background-color: #000000;
   border-radius: 50%;
   pointer-events: none;
   z-index: 99999;
   transform: translate(-50%, -50%);
-  transition: opacity 0.2s ease, transform 0.03s ease;
+  transition: opacity 0.25s ease;
   will-change: transform;
+  opacity: 0;
+  visibility: hidden;
 }
 
-/* 2. HOLLOW RING (Follower) */
+/* 2. HOLLOW RING (Follower - matches exact Douglus video recording) */
 .custom-cursor-ring {
   position: fixed;
   top: 0;
   left: 0;
-  width: 32px;
-  height: 32px;
+  width: 36px;
+  height: 36px;
   border: 1.5px solid #000000;
   border-radius: 50%;
   pointer-events: none;
   z-index: 99998;
   transform: translate(-50%, -50%);
-  transition: width 0.25s cubic-bezier(0.16, 1, 0.3, 1),
-              height 0.25s cubic-bezier(0.16, 1, 0.3, 1),
-              border 0.25s cubic-bezier(0.16, 1, 0.3, 1),
-              background-color 0.25s cubic-bezier(0.16, 1, 0.3, 1),
-              box-shadow 0.25s cubic-bezier(0.16, 1, 0.3, 1),
-              opacity 0.2s ease;
-  will-change: transform, width, height;
+  transition: border-color 0.2s ease, opacity 0.25s ease;
+  will-change: transform;
   display: flex;
   align-items: center;
   justify-content: center;
+  opacity: 0;
+  visibility: hidden;
 }
 
-/* 3. FLUID CONTOUR RIPPLE AURA (Trailing organic wave matching Image 1) */
+/* 3. FLUID CONTOUR RIPPLE AURA (Disabled to keep editorial text razor sharp) */
 .cursor-aura {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 130px;
-  height: 85px;
-  pointer-events: none;
-  z-index: 99997;
-  transform: translate(-50%, -50%);
-  border-radius: 50%;
-  border: 1px solid rgba(0, 0, 0, 0.08);
-  background: radial-gradient(ellipse at center, rgba(0, 0, 0, 0.035) 0%, rgba(0, 0, 0, 0.012) 45%, transparent 70%);
-  box-shadow: 
-    0 0 0 12px rgba(0, 0, 0, 0.03),
-    0 0 0 24px rgba(0, 0, 0, 0.018),
-    0 0 0 38px rgba(0, 0, 0, 0.01),
-    0 0 0 54px rgba(0, 0, 0, 0.005);
-  filter: blur(1.5px);
-  opacity: 0.85;
-  transition: opacity 0.3s ease;
-  will-change: transform, opacity;
+  display: none !important;
+}
+
+body.cursor-active .custom-cursor-dot,
+body.cursor-active .custom-cursor-ring {
+  opacity: 1;
+  visibility: visible;
 }
 
 /* Cursor Label */
@@ -85,55 +71,36 @@
 }
 
 /* ==========================================================================
-   HOVER STATE: OVER THE PHOTO (Matching Image 2 Exactly!)
+   HOVER STATE: OVER THE PHOTO (Exact dynamic DRAG ME circle icon)
    ========================================================================== */
-body.cursor-hover-photo .custom-cursor-ring {
-  width: 74px;
-  height: 74px;
-  border: 2px solid #ffffff !important;
-  background-color: rgba(0, 0, 0, 0.25) !important;
-  backdrop-filter: blur(3px);
-  -webkit-backdrop-filter: blur(3px);
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
-}
-
-body.cursor-hover-photo .custom-cursor-dot {
-  opacity: 0 !important;
-}
-
+body.cursor-hover-photo .custom-cursor-ring,
+body.cursor-hover-photo .custom-cursor-dot,
 body.cursor-hover-photo .cursor-aura {
   opacity: 0 !important;
 }
 
-body.cursor-hover-photo .cursor-label {
-  opacity: 1 !important;
-  color: #ffffff !important;
-}
-
-/* When active dragging on photo */
-body.cursor-dragging .custom-cursor-ring {
-  transform: translate(-50%, -50%) scale(0.92);
-}
-
-/* Hide static handle when hovering photo so custom cursor takes over cleanly */
-.panorama-frame:hover .drag-circle-handle {
-  opacity: 0;
-  transition: opacity 0.2s ease;
+/* Hide native browser cursor over the picture so only the dynamic DRAG ME icon is seen */
+body.cursor-hover-photo,
+body.cursor-hover-photo *,
+.panorama-frame,
+.panorama-frame *,
+.panorama-container {
+  cursor: none !important;
 }
 
 /* ==========================================================================
    OTHER HOVER STATES
    ========================================================================== */
-/* Hovering link or interactive button */
+/* Hovering link or interactive button (clean hollow ring + center dot like video) */
 body.cursor-hover-link .custom-cursor-ring {
-  width: 48px;
-  height: 48px;
+  width: 36px;
+  height: 36px;
   border-color: #000000;
-  background-color: rgba(0, 0, 0, 0.04);
+  background-color: transparent;
 }
 
 body.cursor-hover-link .custom-cursor-dot {
-  opacity: 0.3;
+  opacity: 1;
 }
 
 /* Hovering Project Card (Show "VIEW") */

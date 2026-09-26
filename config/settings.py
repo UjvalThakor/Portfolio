@@ -103,4 +103,4 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 # Email backend (for development)
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 DEFAULT_FROM_EMAIL = 'ujval@dev.local'
-CONTACT_NOTIFICATION_EMAIL = os.getenv('CONTACT_NOTIFICATION_EMAIL', 'ujvalthakor.dev@gmail.com')
+CONTACT_NOTIFICATION_EMAIL = os.getenv('CONTACT_NOTIFICATION_EMAIL', 'ujvalthakor14@gmail.com')

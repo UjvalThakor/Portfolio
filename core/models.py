@@ -98,7 +98,7 @@ class ProfileConfig(models.Model):
     
     github_url = models.URLField(blank=True, default="https://github.com/ujvalthakor")
     linkedin_url = models.URLField(blank=True, default="https://linkedin.com/in/ujvalthakor")
-    email = models.EmailField(default="ujvalthakor.dev@gmail.com")
+    email = models.EmailField(default="ujvalthakor14@gmail.com")
     
     hero_statement_line1 = models.CharField(max_length=100, default="BACKEND")
     hero_statement_line2 = models.CharField(max_length=100, default="ENGINEER")
