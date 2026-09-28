@@ -602,23 +602,55 @@ class ExternalAIProvider:
 
 class ChatbotService:
     """
-    Main orchestrator handling input sanitization, rate-limiting, session context,
-    knowledge retrieval, and fallback to GroundedPortfolioEngine.
+    Production-grade orchestrator handling input validation, rate limiting,
+    database conversation persistence, lead scoring, and multi-provider AI dispatch.
     """
 
     MAX_MESSAGE_LENGTH = 500
-    RATE_LIMIT_SECONDS = 1.0  # Min time between requests
+    RATE_LIMIT_SECONDS = 1.0
     MAX_REQUESTS_PER_MINUTE = 25
 
     @classmethod
+    def get_client_ip(cls, request) -> str:
+        x_forwarded = request.META.get('HTTP_X_FORWARDED_FOR')
+        if x_forwarded:
+            return x_forwarded.split(',')[0].strip()
+        return request.META.get('REMOTE_ADDR', '')
+
+    @classmethod
+    def get_or_create_conversation(cls, request) -> Any:
+        from .models import Conversation
+
+        if not request.session.session_key:
+            request.session.save()
+        s_key = request.session.session_key
+
+        conv = Conversation.objects.filter(session_key=s_key, status__in=['active', 'qualified', 'handoff']).order_by('-updated_at').first()
+        if not conv:
+            ip = cls.get_client_ip(request)
+            ua = request.META.get('HTTP_USER_AGENT', '')[:480]
+            conv = Conversation.objects.create(
+                session_key=s_key,
+                visitor_ip=ip,
+                user_agent=ua,
+                status='active',
+                detected_intent='general_visitor'
+            )
+        return conv
+
+    @classmethod
     def process_message(cls, request, user_message: str) -> Dict[str, Any]:
+        from .models import Message, Lead
+        from .providers import AIProviderFactory
+        from .lead_engine import LeadEngine
+
         # 1. Input sanitization & validation
         clean_text = (user_message or '').strip()
         if not clean_text:
             return {
                 'status': 'error',
                 'reply': "Please provide a question or message.",
-                'suggestions': ["Tell me about Ujval's experience", "What projects has he built?"]
+                'suggestions': ["Tell me about Ujval's experience", "What projects has he built?", "Is he available?"]
             }
 
         if len(clean_text) > cls.MAX_MESSAGE_LENGTH:
@@ -631,7 +663,6 @@ class ChatbotService:
         # 2. Session rate limiting
         session = request.session
         now = time.time()
-        last_req = session.get('chatbot_last_request_time', 0)
         request_count = session.get('chatbot_request_count', 0)
         window_start = session.get('chatbot_window_start', now)
 
@@ -649,43 +680,39 @@ class ChatbotService:
 
         session['chatbot_last_request_time'] = now
 
-        # 3. Retrieve conversation history
+        # 3. Retrieve conversation history & persistent record
         history = session.get('chatbot_history', [])
+        conversation = cls.get_or_create_conversation(request)
 
-        # 4. Attempt external AI model if configured
-        reply = None
-        gemini_key = os.getenv('GEMINI_API_KEY') or os.getenv('AI_API_KEY')
-        openai_key = os.getenv('OPENAI_API_KEY')
-        groq_key = os.getenv('GROQ_API_KEY')
+        # 4. Persist User Message to DB
+        Message.objects.create(
+            conversation=conversation,
+            role='user',
+            content=clean_text
+        )
 
-        if gemini_key:
-            context = PortfolioKnowledgeBase.get_full_context_summary()
-            reply = ExternalAIProvider.call_gemini(gemini_key, clean_text, context, history)
+        # 5. Process through Active AI Provider
+        provider = AIProviderFactory.get_provider()
+        response_dict = provider.generate_response(clean_text, history, conversation)
 
-        if not reply and openai_key:
-            context = PortfolioKnowledgeBase.get_full_context_summary()
-            reply = ExternalAIProvider.call_openai(openai_key, clean_text, context, history)
-
-        if not reply and groq_key:
-            context = PortfolioKnowledgeBase.get_full_context_summary()
-            reply = ExternalAIProvider.call_openai(
-                groq_key, clean_text, context, history, base_url="https://api.groq.com/openai/v1"
-            )
-
-        # 5. Deterministic Grounded Engine fallback (instant, reliable, 100% accurate)
-        suggestions = [
-            "Tell me about BeautyCare AI",
+        reply = response_dict.get('reply') or "I am here to help answer questions about Ujval's engineering work and availability."
+        suggestions = response_dict.get('suggestions', [
             "What backend technologies does Ujval use?",
-            "How can I contact Ujval?",
-            "View full resume"
-        ]
+            "Tell me about BeautyCare AI",
+            "Is Ujval available for hire?",
+            "How can I contact Ujval?"
+        ])
+        tool_calls = response_dict.get('tool_calls', [])
 
-        if not reply:
-            grounded_res = GroundedPortfolioEngine.answer(clean_text, history)
-            reply = grounded_res['reply']
-            suggestions = grounded_res.get('suggestions', suggestions)
+        # 6. Persist Assistant Reply to DB
+        Message.objects.create(
+            conversation=conversation,
+            role='assistant',
+            content=reply,
+            metadata={'tool_calls': tool_calls}
+        )
 
-        # 6. Update session history (store up to last 6 turns)
+        # 7. Update Session History (keep last 6 turns)
         history.append({'role': 'user', 'content': clean_text})
         history.append({'role': 'assistant', 'content': reply})
         if len(history) > 6:
@@ -693,10 +720,13 @@ class ChatbotService:
         session['chatbot_history'] = history
         session.modified = True
 
+        conversation.refresh_from_db()
         return {
             'status': 'success',
             'reply': reply,
-            'suggestions': suggestions
+            'suggestions': suggestions,
+            'intent': conversation.detected_intent,
+            'handoff_requested': conversation.handoff_requested
         }
 
     @classmethod
@@ -704,3 +734,9 @@ class ChatbotService:
         if 'chatbot_history' in request.session:
             del request.session['chatbot_history']
             request.session.modified = True
+
+        # Close active conversation in DB so next session starts fresh
+        if request.session.session_key:
+            from .models import Conversation
+            Conversation.objects.filter(session_key=request.session.session_key, status='active').update(status='closed')
+
