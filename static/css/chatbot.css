@@ -48,7 +48,7 @@
    ========================================================================== */
 .chatbot-trigger {
   position: fixed;
-  bottom: 26px;
+  bottom: 72px;
   right: 28px;
   z-index: 8550;
   width: 58px;
@@ -92,6 +92,7 @@
   width: 26px;
   height: 26px;
   color: #fefff8;
+  transform: translateY(-1px);
   transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.2s ease;
 }
 
@@ -116,18 +117,9 @@
   transform: rotate(0) scale(1);
 }
 
-/* Online Status Dot on Trigger */
+/* Online Status Dot on Trigger (Removed per design) */
 .chat-trigger-status-dot {
-  position: absolute;
-  top: 10px;
-  right: 10px;
-  width: 9px;
-  height: 9px;
-  background-color: var(--chatbot-accent-mint);
-  border: 2px solid #0a0a0c;
-  border-radius: 50%;
-  box-shadow: 0 0 8px rgba(13, 242, 147, 0.8);
-  animation: pulse-dot 2s infinite ease-in-out;
+  display: none !important;
 }
 
 /* Tooltip Pill */
@@ -172,13 +164,13 @@
    ========================================================================== */
 .chatbot-window {
   position: fixed;
-  bottom: 96px;
+  bottom: 142px;
   right: 28px;
   z-index: 8600;
   width: 410px;
   max-width: calc(100vw - 36px);
   height: 600px;
-  max-height: calc(100vh - 120px);
+  max-height: calc(100vh - 165px);
   background-color: var(--chatbot-bg);
   border: 1px solid var(--chatbot-border-strong);
   border-radius: var(--chatbot-radius);
@@ -645,7 +637,7 @@
    ========================================================================== */
 @media (max-width: 640px) {
   .chatbot-trigger {
-    bottom: 20px;
+    bottom: 64px;
     right: 20px;
     width: 52px;
     height: 52px;
