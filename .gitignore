@@ -8,7 +8,9 @@ venv/
 ENV/
 *.sqlite3
 db.sqlite3-journal
-media/
+media/*
+!media/resumes/
+!media/resumes/ujval_thakor_resume.pdf
 staticfiles/
 .env
 .DS_Store

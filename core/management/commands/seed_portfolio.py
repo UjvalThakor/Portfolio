@@ -441,6 +441,7 @@ class Command(BaseCommand):
             defaults={
                 'title': 'Ujval Thakor - Backend Developer Resume (2026)',
                 'summary': 'B.Tech Computer Engineering student with hands-on Python and Django development experience. Skilled in REST APIs, MySQL, PostgreSQL, Redis, Docker, OpenCV, and AI integration.',
+                'file': 'resumes/ujval_thakor_resume.pdf',
                 'is_active': True
             }
         )
