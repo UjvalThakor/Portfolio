@@ -2,15 +2,24 @@ import os
 from pathlib import Path
 from dotenv import load_dotenv
 
+from django.core.exceptions import ImproperlyConfigured
+
 load_dotenv()
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-SECRET_KEY = os.getenv('DJANGO_SECRET_KEY', 'django-insecure-+&c*e*bdr9lvdpkd=gp$ua067tmc#ths6cof9+8asc%1v_^mv8')
+# Security & Environment Configuration
+DEBUG = os.getenv('DJANGO_DEBUG', 'False').lower() in ('true', '1', 't')
 
-DEBUG = os.getenv('DJANGO_DEBUG', 'True') == 'True'
+SECRET_KEY = os.getenv('DJANGO_SECRET_KEY')
+if not SECRET_KEY:
+    if DEBUG:
+        # Development fallback with clear explicit warning
+        SECRET_KEY = 'django-insecure-dev-only-local-environment-key-must-change-in-prod'
+    else:
+        raise ImproperlyConfigured("CRITICAL SECURITY ERROR: DJANGO_SECRET_KEY environment variable must be set when DEBUG is False.")
 
-ALLOWED_HOSTS = os.getenv('DJANGO_ALLOWED_HOSTS', '*').split(',')
+ALLOWED_HOSTS = [h.strip() for h in os.getenv('DJANGO_ALLOWED_HOSTS', 'localhost,127.0.0.1,*').split(',') if h.strip()]
 
 # Application definition
 INSTALLED_APPS = [
@@ -105,3 +114,25 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 DEFAULT_FROM_EMAIL = 'ujval@dev.local'
 CONTACT_NOTIFICATION_EMAIL = os.getenv('CONTACT_NOTIFICATION_EMAIL', 'ujvalthakor14@gmail.com')
+
+# Security Hardening & Defenses
+SECURE_BROWSER_XSS_FILTER = True
+SECURE_CONTENT_TYPE_NOSNIFF = True
+X_FRAME_OPTIONS = 'DENY'
+SECURE_REFERRER_POLICY = 'strict-origin-when-cross-origin'
+SECURE_CROSS_ORIGIN_OPENER_POLICY = 'same-origin'
+SESSION_COOKIE_HTTPONLY = True
+CSRF_COOKIE_HTTPONLY = False  # Keep accessible for JavaScript AJAX/fetch
+SESSION_COOKIE_SAMESITE = 'Lax'
+CSRF_COOKIE_SAMESITE = 'Lax'
+SESSION_COOKIE_AGE = 1209600  # 14 days
+DATA_UPLOAD_MAX_NUMBER_FIELDS = 100
+
+# HTTPS Security (activated when DJANGO_SECURE_SSL is enabled in production)
+if not DEBUG and os.getenv('DJANGO_SECURE_SSL', 'False') == 'True':
+    SECURE_SSL_REDIRECT = True
+    SESSION_COOKIE_SECURE = True
+    CSRF_COOKIE_SECURE = True
+    SECURE_HSTS_SECONDS = 31536000  # 1 year
+    SECURE_HSTS_INCLUDE_SUBDOMAINS = True
+    SECURE_HSTS_PRELOAD = True
