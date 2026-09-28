@@ -1,3 +1,4 @@
+import time
 from django.shortcuts import render, redirect
 from django.contrib import messages
 from django.http import HttpResponse
@@ -16,13 +17,28 @@ def get_client_ip(request):
 
 def contact_view(request):
     if request.method == 'POST':
-        form = ContactForm(request.POST)
         is_htmx = request.headers.get('HX-Request') == 'true' or request.headers.get('x-requested-with') == 'XMLHttpRequest'
+
+        # Rate limiting: Max 5 submissions per 10-minute window per session
+        session = request.session
+        now = time.time()
+        submissions = [t for t in session.get('contact_timestamps', []) if now - t < 600]
+        if len(submissions) >= 5:
+            error_msg = "You have submitted multiple messages recently. Please wait a few minutes before submitting another inquiry."
+            if is_htmx:
+                return HttpResponse(f'<div class="error-banner" style="color: #ff5d1f; font-family: var(--font-mono); padding: 1rem; border: 1px solid #ff5d1f;">{error_msg}</div>', status=429)
+            messages.error(request, error_msg)
+            return redirect('contact:contact')
+
+        form = ContactForm(request.POST)
         
         if form.is_valid():
             contact_msg = form.save(commit=False)
             contact_msg.ip_address = get_client_ip(request)
             contact_msg.save()
+
+            submissions.append(now)
+            session['contact_timestamps'] = submissions
 
             # Dispatch notification email to site owner
             try:
