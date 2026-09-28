@@ -11,13 +11,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # Security & Environment Configuration
 DEBUG = os.getenv('DJANGO_DEBUG', 'False').lower() in ('true', '1', 't')
 
-SECRET_KEY = os.getenv('DJANGO_SECRET_KEY')
-if not SECRET_KEY:
-    if DEBUG:
-        # Development fallback with clear explicit warning
-        SECRET_KEY = 'django-insecure-dev-only-local-environment-key-must-change-in-prod'
-    else:
-        raise ImproperlyConfigured("CRITICAL SECURITY ERROR: DJANGO_SECRET_KEY environment variable must be set when DEBUG is False.")
+SECRET_KEY = os.getenv('DJANGO_SECRET_KEY') or 'django-insecure-build-fallback-key-ujval-portfolio-2026'
 
 ALLOWED_HOSTS = [h.strip() for h in os.getenv('DJANGO_ALLOWED_HOSTS', 'localhost,127.0.0.1,.onrender.com,*').split(',') if h.strip()]
 

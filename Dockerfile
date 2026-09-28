@@ -21,8 +21,8 @@ RUN pip install --no-cache-dir -r requirements.txt
 COPY . /app/
 
 # Collect static assets
-RUN python manage.py collectstatic --noinput
+RUN DJANGO_SECRET_KEY=dummy-build-key python manage.py collectstatic --noinput
 
 EXPOSE 8000
 
-CMD ["gunicorn", "--bind", "0.0.0.0:8000", "--workers", "3", "--threads", "2", "config.wsgi:application"]
+CMD ["sh", "-c", "python manage.py migrate && python manage.py seed_portfolio && gunicorn --bind 0.0.0.0:8000 --workers 3 --threads 2 config.wsgi:application"]
