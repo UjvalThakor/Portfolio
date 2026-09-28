@@ -1,0 +1,48 @@
+{
+  "projects": [
+    {
+      "id": "beautycare-ai",
+      "name": "BeautyCare AI",
+      "number": "01",
+      "category": "AI & REST APIs",
+      "year": "2026",
+      "short_description": "Django-based AI-powered application orchestrating skin analysis via REST APIs with Redis caching.",
+      "description": "BeautyCare AI is an intelligent backend system engineered to deliver tailored skincare diagnostics by synthesizing computer vision and dermatological prompt models. Built using Django and Django REST Framework, the system ingests facial imagery and user metrics to return actionable skin recommendations.",
+      "problem_solved": "External AI inference endpoints introduced latency spikes that compromised interactive responsiveness. Solved by decoupling request processing, caching diagnostic signatures in Redis, and standardizing error handling.",
+      "technologies": ["Python", "Django", "Django REST Framework", "Redis", "REST APIs", "AI Integration"],
+      "features": [
+        "RESTful API design with comprehensive input validation and serialization",
+        "Redis-backed caching for sub-millisecond repeated query responses",
+        "Deterministic fallback mechanisms when upstream AI models exceed response thresholds",
+        "Modular architecture allowing seamless model swapping between LLM/Vision providers"
+      ],
+      "status": "active",
+      "demo_available": false,
+      "github_available": true,
+      "github_url": "https://github.com/ujvalthakor",
+      "portfolio_url": "/projects/beautycare-ai/"
+    },
+    {
+      "id": "fabric-fault-detection",
+      "name": "Fabric Fault Detection & Inspection System",
+      "number": "02",
+      "category": "Real-Time Computer Vision",
+      "year": "2025",
+      "short_description": "Real-time computer vision quality inspection system for textile manufacturing automating defect detection.",
+      "description": "Industrial quality control vision system automating defect detection on textile conveyor lines. Utilizes Python, OpenCV, and threading pipelines to process continuous fabric feeds, flag structural anomalies, and trigger automated defect logs.",
+      "problem_solved": "High-resolution video streaming choked standard single-threaded Python execution. Resolved by decoupling frame capture from frame processing using Python multithreading and thread-safe queues.",
+      "technologies": ["Python", "OpenCV", "Computer Vision", "Multithreading", "NumPy", "Quality Control"],
+      "features": [
+        "Real-time frame ingestion with decoupled capture and inference threads",
+        "Automated edge detection and contour analysis for textile weave fault isolation",
+        "Zero-lag defect logging and automated alert triggering for operators",
+        "Robust noise filtering handling variations in factory lighting conditions"
+      ],
+      "status": "active",
+      "demo_available": false,
+      "github_available": true,
+      "github_url": "https://github.com/ujvalthakor",
+      "portfolio_url": "/projects/fabric-fault-detection/"
+    }
+  ]
+}

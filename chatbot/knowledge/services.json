@@ -1,0 +1,50 @@
+{
+  "services": [
+    {
+      "id": "backend_api_development",
+      "title": "Backend Engineering & REST APIs",
+      "summary": "Design and development of scalable, secure backend systems using Python, Django, and Django REST Framework.",
+      "deliverables": [
+        "Clean REST API design & automated documentation",
+        "Database modeling, indexing, and migration strategies (PostgreSQL/MySQL)",
+        "Authentication, authorization, and role-based access control (RBAC)",
+        "Third-party API integrations and webhooks"
+      ],
+      "best_for": "SaaS backends, web application cores, MVP backends, API refactoring"
+    },
+    {
+      "id": "ai_computer_vision",
+      "title": "AI & Computer Vision Applications",
+      "summary": "Practical AI and vision pipelines using Python, OpenCV, and modern LLM / Vision APIs.",
+      "deliverables": [
+        "Industrial inspection, defect detection, and quality control systems",
+        "Computer vision image/video processing pipelines",
+        "LLM integration, AI agent workflows, and structured prompt engineering",
+        "High-performance caching and low-latency inference orchestration"
+      ],
+      "best_for": "Manufacturing quality control, AI-enabled web applications, automated visual checks"
+    },
+    {
+      "id": "database_performance",
+      "title": "Database Architecture & Optimization",
+      "summary": "Data model structuring, query tuning, and caching strategies to ensure high throughput and data integrity.",
+      "deliverables": [
+        "PostgreSQL and MySQL schema design and query optimization",
+        "Redis caching architecture for high-traffic endpoints",
+        "Data validation, normalization, and transactional consistency"
+      ],
+      "best_for": "Existing apps experiencing slowdowns, database redesigns, scalable architectures"
+    },
+    {
+      "id": "automation_tooling",
+      "title": "Automation & Custom Internal Tools",
+      "summary": "Python scripts, data processing workflows, and custom dashboards that eliminate manual work.",
+      "deliverables": [
+        "Automated data extraction, processing, and reporting",
+        "Background task processing and scheduled jobs",
+        "Custom administrative interfaces and notification dispatchers"
+      ],
+      "best_for": "Business process automation, data pipeline development, workflow tools"
+    }
+  ]
+}

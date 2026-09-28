@@ -1,0 +1,15 @@
+{
+  "name": "Ujval Thakor",
+  "title": "Backend Developer",
+  "subtitle": "Python • Django • REST APIs • AI/ML",
+  "location": "Surat, Gujarat, India",
+  "timezone": "Asia/Kolkata (UTC+5:30)",
+  "email": "ujvalthakor14@gmail.com",
+  "phone": "+91 9104502128",
+  "github": "https://github.com/ujvalthakor",
+  "linkedin": "https://linkedin.com/in/ujvalthakor",
+  "education": "B.Tech in Computer Engineering (2022 - 2026)",
+  "short_bio": "Backend developer focused on Python, Django, REST APIs, database architecture, and AI integrations.",
+  "about": "I build reliable backend systems, APIs, automation tools, and AI-powered applications. I enjoy turning complex problem statements into structured, clean, and scalable backend implementations.",
+  "working_philosophy": "Systems that actually work: clean data flow, resilient database queries, secure APIs, and deterministic performance."
+}

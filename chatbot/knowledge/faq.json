@@ -1,0 +1,28 @@
+{
+  "faqs": [
+    {
+      "question": "What is Ujval's primary tech stack?",
+      "answer": "Ujval specializes in Python, Django, Django REST Framework, PostgreSQL, MySQL, Redis, and computer vision with OpenCV."
+    },
+    {
+      "question": "Can Ujval build an AI inspection system for manufacturing or factories?",
+      "answer": "Yes. Ujval engineered an industrial 'Fabric Fault Detection & Inspection System' utilizing Python, OpenCV, and multithreaded queues for continuous conveyor line defect detection. He can discuss your factory's specific vision and quality-assurance requirements."
+    },
+    {
+      "question": "Does Ujval take on freelance or contract work?",
+      "answer": "Yes, Ujval is open to selected freelance, contract, and full-time backend and AI development opportunities."
+    },
+    {
+      "question": "How much does a project cost?",
+      "answer": "Ujval does not have a flat public price list. Scope, architecture complexity, data requirements, and timeline dictate pricing. Share your project requirements and I will collect the details for Ujval to provide an accurate estimate."
+    },
+    {
+      "question": "Where is Ujval based and does he work remotely?",
+      "answer": "Ujval is based in Surat, Gujarat, India (IST / UTC+5:30) and works smoothly with remote teams worldwide."
+    },
+    {
+      "question": "Does Ujval work with Rust, Go, or Ruby?",
+      "answer": "I do not have confirmed production information about Rust, Go, or Ruby in Ujval's verified portfolio. His verified strengths are Python, Django, REST APIs, and Computer Vision. I can connect you with him to discuss specific stack requirements."
+    }
+  ]
+}

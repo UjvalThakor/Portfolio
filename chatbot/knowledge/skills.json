@@ -1,0 +1,48 @@
+{
+  "categories": [
+    {
+      "name": "Backend & Core",
+      "slug": "backend",
+      "skills": [
+        {"name": "Python 3.x", "badge": "Core Strength", "level": "Advanced"},
+        {"name": "Django", "badge": "Production Ready", "level": "Advanced"},
+        {"name": "Django REST Framework", "badge": "Production Ready", "level": "Advanced"},
+        {"name": "FastAPI", "badge": "Hands-on", "level": "Intermediate"},
+        {"name": "Object-Oriented Programming", "badge": "Core", "level": "Advanced"},
+        {"name": "Microservices & Modular Monoliths", "badge": "Architecture", "level": "Intermediate"}
+      ]
+    },
+    {
+      "name": "Databases & Caching",
+      "slug": "database",
+      "skills": [
+        {"name": "PostgreSQL", "badge": "Production Ready", "level": "Advanced"},
+        {"name": "MySQL", "badge": "Production Ready", "level": "Advanced"},
+        {"name": "Redis", "badge": "Caching & Queues", "level": "Intermediate"},
+        {"name": "SQLite", "badge": "Development", "level": "Advanced"}
+      ]
+    },
+    {
+      "name": "AI & Computer Vision",
+      "slug": "ai_cv",
+      "skills": [
+        {"name": "Computer Vision", "badge": "Hands-on", "level": "Intermediate"},
+        {"name": "OpenCV", "badge": "Real-Time Processing", "level": "Intermediate"},
+        {"name": "YOLO / Object Detection", "badge": "Applied AI", "level": "Intermediate"},
+        {"name": "AI API Integration", "badge": "LLM & Vision", "level": "Advanced"},
+        {"name": "Prompt Engineering & RAG", "badge": "Applied AI", "level": "Intermediate"}
+      ]
+    },
+    {
+      "name": "DevOps & Tooling",
+      "slug": "devops",
+      "skills": [
+        {"name": "Docker & Docker Compose", "badge": "Containerization", "level": "Intermediate"},
+        {"name": "Git & GitHub", "badge": "Version Control", "level": "Advanced"},
+        {"name": "Nginx", "badge": "Reverse Proxy", "level": "Intermediate"},
+        {"name": "Linux / Bash", "badge": "Environment", "level": "Intermediate"},
+        {"name": "Postman / Bruno", "badge": "API Testing", "level": "Advanced"}
+      ]
+    }
+  ]
+}

@@ -1,0 +1,29 @@
+{
+  "education": {
+    "degree": "Bachelor of Technology in Computer Engineering",
+    "timeline": "2022 – 2026",
+    "location": "Gujarat, India",
+    "coursework": [
+      "Data Structures & Algorithms",
+      "Database Management Systems (RDBMS)",
+      "Object-Oriented Programming (Python/C++)",
+      "Computer Networks",
+      "Operating Systems & System Architecture",
+      "Artificial Intelligence & Computer Vision"
+    ]
+  },
+  "experiences": [
+    {
+      "role": "Backend & AI Developer",
+      "organization": "Independent Engineering & Client Projects",
+      "period": "2024 – Present",
+      "location": "Surat, Gujarat, India",
+      "type": "Professional Engineering",
+      "highlights": [
+        "Architected and deployed production-ready Django and REST API services for web and automation applications",
+        "Engineered real-time computer vision detection pipelines using OpenCV with decoupled multithreaded queues",
+        "Configured Redis caching and database query optimization on PostgreSQL and MySQL"
+      ]
+    }
+  ]
+}
